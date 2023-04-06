@@ -2,7 +2,6 @@ package com.emailsender.Email.Sender.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;

@@ -42,7 +42,7 @@ public class OTPEmailController {
         System.out.println(emailOTPDto);
 
         model.addAttribute("emailOTPDto", emailOTPDto);
-         emailService.sendOTPMail(emailOTPDto);
+        emailService.sendOTPMail(emailOTPDto);
         return "email-otp-enter";
     }
 
@@ -50,12 +50,7 @@ public class OTPEmailController {
     public String confirmOTP(@Valid @ModelAttribute EmailOTPDto emailOTPDto,
                              BindingResult result) {
 
-        if (result.hasErrors()) {
-            System.out.println("Confirming OTP has errors");
-            return "email-otp-enter";
-        }
-
-        System.out.println(emailOTPDto);
+        if (result.hasErrors()) return "email-otp-enter";
         return "email-notification";
     }
 }

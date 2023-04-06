@@ -6,7 +6,6 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalTime;
-import java.util.Objects;
 
 public class OTPValidator implements ConstraintValidator<OTP, Integer> {
 
@@ -16,6 +15,8 @@ public class OTPValidator implements ConstraintValidator<OTP, Integer> {
     @Override
     public boolean isValid(Integer userInputOTP, ConstraintValidatorContext context) {
         LocalTime expiration = otpGeneratorService.getExpiration();
+        System.out.println("expiration " + expiration);
+        System.out.println("generated otp " + otpGeneratorService.getOtp());
         if (LocalTime.now().isAfter(expiration)) {
             // Setting the error message
             context.buildConstraintViolationWithTemplate("OTP Expired!").addConstraintViolation();

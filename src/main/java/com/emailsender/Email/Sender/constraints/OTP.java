@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 @Constraint(validatedBy = OTPValidator.class)
 public @interface OTP {
-    String message() default "";
+    String message() default "OTP is either expired or incorrect";
 
     //represents additional information about annotation
     Class<?>[] groups() default {};

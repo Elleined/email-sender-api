@@ -6,7 +6,7 @@ This repository contains the template for sending email with attachment, sending
  - To Generate the app password to be use in this application you can follow these tutorial 
    - https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
 
-# This project technology use is
+# Technologies used for this project are:
   - Spring Boot
   - Spring MVC
   - Thymeleaf

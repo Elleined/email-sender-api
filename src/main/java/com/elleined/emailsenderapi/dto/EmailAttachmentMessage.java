@@ -1,20 +1,20 @@
 package com.elleined.emailsenderapi.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class EmailAttachmentMessage extends EmailMessage {
 
-    @NotNull(message = "attachment cannot be null!")
-    private MultipartFile attachment;
-
+    // example: C://path//to//file.extensionname
+    @NotBlank(message = "attachment cannot be blank, null, or empty!")
+    private String absoluteAttachmentFileName;
 
     @Builder(builderMethodName = "emailAttachmentMessageBuilder")
-    public EmailAttachmentMessage(String receiver, String subject, String messageBody, MultipartFile attachment) {
+    public EmailAttachmentMessage(String receiver, String subject, String messageBody, @NotNull(message = "attachment cannot be null!") String absoluteAttachmentFileName) {
         super(receiver, subject, messageBody);
-        this.attachment = attachment;
+        this.absoluteAttachmentFileName = absoluteAttachmentFileName;
     }
 }

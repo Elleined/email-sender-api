@@ -32,7 +32,7 @@ public class ExceptionController {
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ResponseMessage> handleIOException(IOException ex) {
-        var responseMessage = new ResponseMessage(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
+        var responseMessage = new ResponseMessage(HttpStatus.NOT_ACCEPTABLE, "Cannot send email with attachement! " + ex.getMessage());
         return new ResponseEntity<>(responseMessage, HttpStatus.NOT_ACCEPTABLE);
     }
 }

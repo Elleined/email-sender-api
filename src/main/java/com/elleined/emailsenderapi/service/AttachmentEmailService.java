@@ -27,8 +27,8 @@ public class AttachmentEmailService extends BaseEmailService implements EmailSer
         messageHelper.setSubject(emailAttachmentMessage.getSubject());
         messageHelper.setText(emailAttachmentMessage.getMessageBody());
 
-        byte[] bytes = emailAttachmentMessage.getAttachment().getBytes();
-        String fileName = emailAttachmentMessage.getAttachment().getOriginalFilename();
+        byte[] bytes = emailAttachmentMessage.getAbsoluteAttachmentFileName().getBytes();
+        String fileName = emailAttachmentMessage.getAbsoluteAttachmentFileName();
 
         ByteArrayResource resource = new ByteArrayResource(bytes);
         messageHelper.addAttachment(Objects.requireNonNull(fileName), resource);

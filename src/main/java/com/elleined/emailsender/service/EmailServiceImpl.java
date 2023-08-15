@@ -1,7 +1,7 @@
-package com.emailsender.Email.Sender.service;
+package com.elleined.emailsender.service;
 
-import com.emailsender.Email.Sender.dto.EmailDTO;
-import com.emailsender.Email.Sender.dto.EmailOTPDto;
+import com.elleined.emailsender.dto.EmailDTO;
+import com.elleined.emailsender.dto.EmailOTPDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 @Service
-public class EmailService {
+public class EmailServiceImpl {
 
     @Autowired
     private JavaMailSender mailSender;

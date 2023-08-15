@@ -1,6 +1,6 @@
-package com.emailsender.Email.Sender.constraints;
+package com.elleined.emailsender.constraints;
 
-import com.emailsender.Email.Sender.service.OTPGeneratorService;
+import com.elleined.emailsender.service.OTPGeneratorService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;

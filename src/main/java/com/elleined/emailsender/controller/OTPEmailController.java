@@ -1,8 +1,8 @@
-package com.emailsender.Email.Sender.controller;
+package com.elleined.emailsender.controller;
 
-import com.emailsender.Email.Sender.dto.EmailOTPDto;
-import com.emailsender.Email.Sender.service.EmailService;
-import com.emailsender.Email.Sender.service.OTPGeneratorService;
+import com.elleined.emailsender.dto.EmailOTPDto;
+import com.elleined.emailsender.service.EmailServiceImpl;
+import com.elleined.emailsender.service.OTPGeneratorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import java.time.LocalTime;
 public class OTPEmailController {
 
     @Autowired
-    private EmailService emailService;
+    private EmailServiceImpl emailServiceImpl;
 
     @Autowired
     private OTPGeneratorService otpGeneratorService;
@@ -42,7 +42,7 @@ public class OTPEmailController {
         System.out.println(emailOTPDto);
 
         model.addAttribute("emailOTPDto", emailOTPDto);
-        emailService.sendOTPMail(emailOTPDto);
+        emailServiceImpl.sendOTPMail(emailOTPDto);
         return "email-otp-enter";
     }
 

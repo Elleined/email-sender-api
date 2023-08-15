@@ -1,6 +1,6 @@
-package com.emailsender.Email.Sender.dto;
+package com.elleined.emailsender.dto;
 
-import com.emailsender.Email.Sender.constraints.OTP;
+import com.elleined.emailsender.constraints.OTP;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

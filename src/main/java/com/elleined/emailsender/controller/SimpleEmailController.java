@@ -1,7 +1,7 @@
-package com.emailsender.Email.Sender.controller;
+package com.elleined.emailsender.controller;
 
-import com.emailsender.Email.Sender.dto.EmailDTO;
-import com.emailsender.Email.Sender.service.EmailService;
+import com.elleined.emailsender.dto.EmailDTO;
+import com.elleined.emailsender.service.EmailServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SimpleEmailController {
 
     @Autowired
-    private EmailService emailService;
+    private EmailServiceImpl emailServiceImpl;
 
     @GetMapping
     public String goToSimpleEmailView(@ModelAttribute EmailDTO emailDTO) {
@@ -32,7 +32,7 @@ public class SimpleEmailController {
             return "simple-email";
         }
 
-        emailService.sendSimpleMail(emailDTO);
+        emailServiceImpl.sendSimpleMail(emailDTO);
         return "email-notification";
     }
 }

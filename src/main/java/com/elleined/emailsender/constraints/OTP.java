@@ -1,4 +1,4 @@
-package com.emailsender.Email.Sender.constraints;
+package com.elleined.emailsender.constraints;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

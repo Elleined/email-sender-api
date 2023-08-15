@@ -1,4 +1,4 @@
-package com.emailsender.Email.Sender.dto;
+package com.elleined.emailsender.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +14,6 @@ public class EmailDTO {
 
     @NotBlank
     private String subject;
-
 
     @NotBlank
     private String messageBody;

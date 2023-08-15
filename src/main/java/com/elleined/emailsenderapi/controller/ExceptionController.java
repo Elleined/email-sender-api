@@ -26,7 +26,7 @@ public class ExceptionController {
 
     @ExceptionHandler(MessagingException.class)
     public ResponseEntity<ResponseMessage> handleMessagingException(MessagingException ex) {
-        var responseMessage = new ResponseMessage(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+        var responseMessage = new ResponseMessage(HttpStatus.SERVICE_UNAVAILABLE, "Cannot send email! Probably theres something wrong with the mail service! " + ex.getMessage());
         return new ResponseEntity<>(responseMessage, HttpStatus.SERVICE_UNAVAILABLE);
     }
 

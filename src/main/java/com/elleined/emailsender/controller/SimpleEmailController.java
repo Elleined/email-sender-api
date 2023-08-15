@@ -17,7 +17,7 @@ import java.io.IOException;
 @RequestMapping("/sendSimpleEmail")
 public class SimpleEmailController {
 
-    private final EmailService emailService;
+    private final EmailService<EmailMessage> emailService;
 
     @PostMapping
     public EmailMessage sendSimpleMail(@Valid @RequestBody EmailMessage emailMessage)

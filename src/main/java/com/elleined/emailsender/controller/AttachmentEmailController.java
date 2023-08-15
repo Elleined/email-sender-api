@@ -17,10 +17,10 @@ import java.io.IOException;
 @RequestMapping("/sendEmailWithAttachment")
 public class AttachmentEmailController {
 
-    private final EmailService emailService;
+    private final EmailService<EmailAttachmentMessage> emailService;
 
     @Autowired
-    public AttachmentEmailController(@Qualifier("attachmentEmailService") EmailService emailService) {
+    public AttachmentEmailController(@Qualifier("attachmentEmailService") EmailService<EmailAttachmentMessage> emailService) {
         this.emailService = emailService;
     }
 

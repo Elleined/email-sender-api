@@ -5,6 +5,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.time.LocalTime;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Qualifier("otpEmailService")
 public class OTPEmailService extends BaseEmailService implements EmailService<OTPMessage> {
 
     private final OTPGeneratorService otpGeneratorService;

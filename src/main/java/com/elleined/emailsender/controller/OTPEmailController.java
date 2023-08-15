@@ -17,10 +17,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/sendOTPMail")
 public class OTPEmailController {
-    private final EmailService emailService;
+    private final EmailService<OTPMessage> emailService;
     private final OTPGeneratorService otpGeneratorService;
     @Autowired
-    public OTPEmailController(@Qualifier("otpEmailService") EmailService emailService, OTPGeneratorService otpGeneratorService) {
+    public OTPEmailController(@Qualifier("otpEmailService") EmailService<OTPMessage> emailService, OTPGeneratorService otpGeneratorService) {
         this.emailService = emailService;
         this.otpGeneratorService = otpGeneratorService;
     }

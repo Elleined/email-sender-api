@@ -4,6 +4,7 @@ import com.elleined.emailsender.dto.EmailAttachmentMessage;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@Qualifier("attachmentEmailService")
 public class AttachmentEmailService extends BaseEmailService implements EmailService<EmailAttachmentMessage> {
     @Override
     public void send(EmailAttachmentMessage emailAttachmentMessage) throws MessagingException, IOException {

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class EmailDTO {
 
     @Email
+    @NotBlank
     private String receiver;
 
     @NotBlank

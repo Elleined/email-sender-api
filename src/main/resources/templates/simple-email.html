@@ -28,8 +28,7 @@
     <span class="input-group-text">Subject</span>
     <input type="text"
            class="form-control"
-           th:field="*{subject}"
-           required >
+           th:field="*{subject}">
     <span th:if="${#fields.hasErrors('subject')}" th:error="*{subject}" th:text="${#fields.errors('subject')}"></span>
   </div>
 

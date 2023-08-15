@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class Message {
 
-    @Email
-    @NotBlank
+    @Email(message = "Please provide a proper email!")
+    @NotBlank(message = "Receiver email cannot be blank, null, or empty!")
     private String receiver;
 }

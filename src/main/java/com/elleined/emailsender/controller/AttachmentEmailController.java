@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/sendEmailWithAttachment")
+@RequestMapping("/sendMailWithAttachment")
 public class AttachmentEmailController {
 
     private final EmailService<EmailAttachmentMessage> emailService;

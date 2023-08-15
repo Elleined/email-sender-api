@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmailMessage extends Message {
 
-    @NotBlank
+    @NotBlank(message = "Email subject cannot be blank, null, or empty!")
     private String subject;
 
-    @NotBlank
+    @NotBlank(message = "Email Message cannot be blank, null, or empty!")
     private String messageBody;
 
     @Builder

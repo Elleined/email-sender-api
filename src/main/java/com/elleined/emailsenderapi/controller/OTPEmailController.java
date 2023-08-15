@@ -30,8 +30,9 @@ public class OTPEmailController {
             throws MessagingException, IOException {
 
         emailService.send(otpMessage);
+
         otpMessage.setOtp(otpGeneratorService.getOtp()); // Sets the otp because otp is already generated inside send method
-        otpMessage.setExpirationDate(otpGeneratorService.getExpiration()); // Sets the otp expiration becuase the exporation is already generated inside send method
+        otpMessage.setExpirationTime(otpGeneratorService.getExpiration()); // Sets the otp expiration becuase the exporation is already generated inside send method
         return otpMessage;
     }
 }

@@ -1,6 +1,6 @@
-package com.elleined.emailsender.service;
+package com.elleined.emailsenderapi.service;
 
-import com.elleined.emailsender.dto.OTPMessage;
+import com.elleined.emailsenderapi.dto.OTPMessage;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

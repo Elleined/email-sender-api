@@ -1,4 +1,4 @@
-package com.elleined.emailsender.dto;
+package com.elleined.emailsenderapi.dto;
 
 
 import lombok.Data;

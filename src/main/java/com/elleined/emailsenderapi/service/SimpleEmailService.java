@@ -1,6 +1,6 @@
-package com.elleined.emailsender.service;
+package com.elleined.emailsenderapi.service;
 
-import com.elleined.emailsender.dto.EmailMessage;
+import com.elleined.emailsenderapi.dto.EmailMessage;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
-package com.elleined.emailsender.controller;
+package com.elleined.emailsenderapi.controller;
 
-import com.elleined.emailsender.dto.EmailMessage;
-import com.elleined.emailsender.service.EmailService;
+import com.elleined.emailsenderapi.dto.EmailMessage;
+import com.elleined.emailsenderapi.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

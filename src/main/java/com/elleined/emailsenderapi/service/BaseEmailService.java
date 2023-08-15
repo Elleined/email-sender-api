@@ -1,4 +1,4 @@
-package com.elleined.emailsender.service;
+package com.elleined.emailsenderapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

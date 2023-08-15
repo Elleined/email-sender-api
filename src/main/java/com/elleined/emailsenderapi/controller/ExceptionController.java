@@ -1,6 +1,6 @@
-package com.elleined.emailsender.controller;
+package com.elleined.emailsenderapi.controller;
 
-import com.elleined.emailsender.dto.ResponseMessage;
+import com.elleined.emailsenderapi.dto.ResponseMessage;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

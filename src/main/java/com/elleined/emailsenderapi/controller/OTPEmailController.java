@@ -1,8 +1,8 @@
-package com.elleined.emailsender.controller;
+package com.elleined.emailsenderapi.controller;
 
-import com.elleined.emailsender.dto.OTPMessage;
-import com.elleined.emailsender.service.EmailService;
-import com.elleined.emailsender.service.OTPGeneratorService;
+import com.elleined.emailsenderapi.dto.OTPMessage;
+import com.elleined.emailsenderapi.service.EmailService;
+import com.elleined.emailsenderapi.service.OTPGeneratorService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

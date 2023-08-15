@@ -1,4 +1,4 @@
-package com.elleined.emailsender.service;
+package com.elleined.emailsenderapi.service;
 
 import lombok.Data;
 import org.springframework.stereotype.Service;

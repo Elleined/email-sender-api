@@ -1,7 +1,6 @@
-package com.elleined.emailsender.service.otp;
+package com.elleined.emailsender.service;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -9,22 +8,19 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+@Data
 @Service
 public class OTPGeneratorService {
     private final Set<Integer> otpList = new HashSet<>();
-
-    @Getter @Setter
     private LocalTime expiration;
+    private int otp;
 
-    @Getter @Setter
-    private String receiver;
-
-    @Getter
-    private Integer otp;
-
-    public void generateOtp() {
+    /**
+     * This method sets the otp
+     */
+    public void generateOTP() {
         this.otp = new Random().nextInt(100_000, 999_999);
-        if (otpList.contains(this.otp)) generateOtp();
+        if (otpList.contains(this.otp)) generateOTP();
         otpList.add(otp);
     }
 }

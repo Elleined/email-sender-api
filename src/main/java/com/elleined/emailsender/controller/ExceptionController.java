@@ -1,4 +1,4 @@
-package com.elleined.emailsender.controller.newcontroller;
+package com.elleined.emailsender.controller;
 
 import com.elleined.emailsender.dto.ResponseMessage;
 import jakarta.mail.MessagingException;
@@ -9,6 +9,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
 import java.util.List;
 
 @ControllerAdvice
@@ -27,5 +28,11 @@ public class ExceptionController {
     public ResponseEntity<ResponseMessage> handleMessagingException(MessagingException ex) {
         var responseMessage = new ResponseMessage(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
         return new ResponseEntity<>(responseMessage, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ResponseMessage> handleIOException(IOException ex) {
+        var responseMessage = new ResponseMessage(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
+        return new ResponseEntity<>(responseMessage, HttpStatus.NOT_ACCEPTABLE);
     }
 }

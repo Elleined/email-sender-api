@@ -1,56 +1,36 @@
 package com.elleined.emailsender.controller;
 
-import com.elleined.emailsender.dto.EmailOTPDto;
-import com.elleined.emailsender.service.EmailServiceImpl;
-import com.elleined.emailsender.service.otp.OTPGeneratorService;
+import com.elleined.emailsender.dto.OTPMessage;
+import com.elleined.emailsender.service.EmailService;
+import com.elleined.emailsender.service.OTPGeneratorService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalTime;
+import java.io.IOException;
 
-@Controller
-@RequestMapping("/email-otp")
+@RestController
+@RequestMapping("/sendOTPMail")
 public class OTPEmailController {
-
+    private final EmailService emailService;
+    private final OTPGeneratorService otpGeneratorService;
     @Autowired
-    private EmailServiceImpl emailServiceImpl;
-
-    @Autowired
-    private OTPGeneratorService otpGeneratorService;
-
-    @GetMapping
-    public String goToOTPEmailView(@ModelAttribute EmailOTPDto emailOTPDto) {
-        return "email-otp";
+    public OTPEmailController(@Qualifier("otpEmailService") EmailService emailService, OTPGeneratorService otpGeneratorService) {
+        this.emailService = emailService;
+        this.otpGeneratorService = otpGeneratorService;
     }
 
-    @PostMapping("/sendOTP")
-    public String sendOTP(@RequestParam String receiver,
-                          Model model) {
+    @PostMapping
+    public OTPMessage sendOTPMail(@Valid @RequestBody OTPMessage otpMessage)
+            throws MessagingException, IOException {
 
-        otpGeneratorService.generateOtp();
-        otpGeneratorService.setExpiration(LocalTime.now().plusSeconds(60));
-
-        EmailOTPDto emailOTPDto = EmailOTPDto.builder()
-                .receiver(receiver)
-                .OTP(otpGeneratorService.getOtp())
-                .expiration(otpGeneratorService.getExpiration())
-                .build();
-        System.out.println(emailOTPDto);
-
-        model.addAttribute("emailOTPDto", emailOTPDto);
-        emailServiceImpl.sendOTPMail(emailOTPDto);
-        return "email-otp-enter";
-    }
-
-    @PostMapping("/sendOTP/confirmOTP")
-    public String confirmOTP(@Valid @ModelAttribute EmailOTPDto emailOTPDto,
-                             BindingResult result) {
-
-        if (result.hasErrors()) return "email-otp-enter";
-        return "email-notification";
+        emailService.send(otpMessage);
+        otpMessage.setOtp(otpGeneratorService.getOtp()); // Sets the otp because otp is already generated inside send method
+        return otpMessage;
     }
 }

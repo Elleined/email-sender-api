@@ -2,7 +2,7 @@ package com.elleined.emailsender.controller;
 
 import com.elleined.emailsender.dto.EmailOTPDto;
 import com.elleined.emailsender.service.EmailServiceImpl;
-import com.elleined.emailsender.service.OTPGeneratorService;
+import com.elleined.emailsender.service.otp.OTPGeneratorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -13,30 +13,25 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-class AttachmentEmailService extends BaseEmailService implements EmailService<EmailAttachmentMessage> {
+public class AttachmentEmailService extends BaseEmailService implements EmailService<EmailAttachmentMessage> {
     @Override
-    public void send(EmailAttachmentMessage emailAttachmentMessage) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
+    public void send(EmailAttachmentMessage emailAttachmentMessage) throws MessagingException, IOException {
+        MimeMessage message = javaMailSender.createMimeMessage();
 
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
 
-            messageHelper.setFrom(sender);
-            messageHelper.setTo(emailAttachmentMessage.getReceiver());
-            messageHelper.setSubject(emailAttachmentMessage.getSubject());
-            messageHelper.setText(emailAttachmentMessage.getMessageBody());
+        messageHelper.setFrom(sender);
+        messageHelper.setTo(emailAttachmentMessage.getReceiver());
+        messageHelper.setSubject(emailAttachmentMessage.getSubject());
+        messageHelper.setText(emailAttachmentMessage.getMessageBody());
 
-            byte[] bytes = emailAttachmentMessage.getAttachment().getBytes();
-            String fileName = emailAttachmentMessage.getAttachment().getOriginalFilename();
+        byte[] bytes = emailAttachmentMessage.getAttachment().getBytes();
+        String fileName = emailAttachmentMessage.getAttachment().getOriginalFilename();
 
-            ByteArrayResource resource = new ByteArrayResource(bytes);
-            messageHelper.addAttachment(Objects.requireNonNull(fileName), resource);
+        ByteArrayResource resource = new ByteArrayResource(bytes);
+        messageHelper.addAttachment(Objects.requireNonNull(fileName), resource);
 
-            javaMailSender.send(message);
-            System.out.println("Email with attachment sent successfully!");
-        } catch (MessagingException | IOException e) {
-            e.printStackTrace();
-            System.out.println("Error Occurred! Sending email with attachment failed!");
-        }
+        javaMailSender.send(message);
+        log.debug("Email with attachment sent successfully!");
     }
 }

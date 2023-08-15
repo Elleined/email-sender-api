@@ -11,25 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 @Slf4j
-class SimpleEmailService extends BaseEmailService implements EmailService<EmailMessage>  {
+public class SimpleEmailService extends BaseEmailService implements EmailService<EmailMessage> {
 
     @Override
-    public void send(EmailMessage emailMessage) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
+    public void send(EmailMessage emailMessage) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
 
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message);
 
-            messageHelper.setFrom(sender);
-            messageHelper.setTo(emailMessage.getReceiver());
-            messageHelper.setSubject(emailMessage.getSubject());
-            messageHelper.setText(emailMessage.getMessageBody());
+        messageHelper.setFrom(sender);
+        messageHelper.setTo(emailMessage.getReceiver());
+        messageHelper.setSubject(emailMessage.getSubject());
+        messageHelper.setText(emailMessage.getMessageBody());
 
-            javaMailSender.send(message);
-            System.out.println("Sending simple mail success!");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Error Occurred! Sending simple mail failed!");
-        }
+        javaMailSender.send(message);
+        log.debug("Sending simple mail success!");
     }
 }

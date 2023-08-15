@@ -11,31 +11,27 @@ import java.time.LocalTime;
 
 @Service
 @Slf4j
-class OTPEmailService extends BaseEmailService implements EmailService<OTPMessage> {
+public class OTPEmailService extends BaseEmailService implements EmailService<OTPMessage> {
     @Override
-    public void send(OTPMessage otpMessage) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
+    public void send(OTPMessage otpMessage) throws MessagingException {
 
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+        MimeMessage message = javaMailSender.createMimeMessage();
 
-            messageHelper.setFrom(sender);
-            messageHelper.setTo(otpMessage.getReceiver());
-            messageHelper.setSubject("OTP Confirmation");
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message);
 
-            int timeSpan = otpMessage.getExpiration().getMinute() - LocalTime.now().getMinute();
-            String howLong = timeSpan <= 1 ? "minute" : "minutes";
-            String messageText = String.format("""
+        messageHelper.setFrom(sender);
+        messageHelper.setTo(otpMessage.getReceiver());
+        messageHelper.setSubject("OTP Confirmation");
+
+        int timeSpan = otpMessage.getExpiration().getMinute() - LocalTime.now().getMinute();
+        String howLong = timeSpan <= 1 ? "minute" : "minutes";
+        String messageText = String.format("""
                     %s is your authentication code. For your protection, do not
                     share this code to anyone. Code will be valid for %d %s only
                     """, otpMessage.getOtp(), timeSpan, howLong);
-            messageHelper.setText(messageText);
+        messageHelper.setText(messageText);
 
-            javaMailSender.send(message);
-            System.out.println("Email with OTP sent successfully!");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Error Occurred! Sending email with OTP failed!");
-        }
+        javaMailSender.send(message);
+        log.debug("Email with OTP sent successfully!");
     }
 }

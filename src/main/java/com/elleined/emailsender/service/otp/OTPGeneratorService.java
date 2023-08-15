@@ -1,4 +1,4 @@
-package com.elleined.emailsender.service;
+package com.elleined.emailsender.service.otp;
 
 import lombok.Getter;
 import lombok.Setter;

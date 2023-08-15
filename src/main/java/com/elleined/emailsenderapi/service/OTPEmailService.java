@@ -22,7 +22,7 @@ public class OTPEmailService extends BaseEmailService implements EmailService<OT
     @Override
     public void send(OTPMessage otpMessage) throws MessagingException {
         otpGeneratorService.generateOTP();
-        LocalTime expiration = LocalTime.now().plusSeconds(otpMessage.getExpirationInSeconds());
+        LocalTime expiration = LocalTime.now().plusSeconds(otpMessage.getPlusExpirationSeconds());
         otpGeneratorService.setExpiration(expiration);
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

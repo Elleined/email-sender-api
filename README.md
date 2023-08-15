@@ -8,10 +8,7 @@ This repository contains the template for sending email with attachment, sending
 
 # Technologies used
   - Spring boot
-  - Boostrap
-  - Jquery
   - Spring mvc
-  - Thymeleaf
   - Java mail API
   - Hbernate validator
 

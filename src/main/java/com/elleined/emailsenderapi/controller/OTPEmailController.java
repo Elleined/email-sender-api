@@ -19,6 +19,7 @@ import java.io.IOException;
 public class OTPEmailController {
     private final EmailService<OTPMessage> emailService;
     private final OTPGeneratorService otpGeneratorService;
+
     @Autowired
     public OTPEmailController(@Qualifier("otpEmailService") EmailService<OTPMessage> emailService, OTPGeneratorService otpGeneratorService) {
         this.emailService = emailService;

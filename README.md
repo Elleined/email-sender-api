@@ -3,9 +3,16 @@ This repository contains the template for sending email with attachment, sending
 
 # How to send email
  - First make sure to run this [discovery-server-service](https://github.com/Elleined/eureka-discovery-service)
- - Generate app password first check the provided link below.
- - The spring.mail.username property will be your email youre going to use to generate the app password.
- - The spring.mail.password property will be your 16 digit generated password.
+ - Goto Google Account 
+ - Search App Password
+ - In Select App Choose Other(Custom name) and provide name you want
+ - Click generate 
+ - Copy the 16 letter characters that is your app password
+ - Go to application.properties set these following
+ ```
+ spring.mail.username=sample@gmail.com  
+ spring.mail.password=qwerasdfzxcv
+ ```
  - Check API endpoints in Postman.
 
 # Technologies used

@@ -2,7 +2,6 @@
 This repository contains the template for sending email with attachment, sending simple email, and sending OTP in email with expiration
 
 # How to send email
- - First make sure to run this [discovery-server-service](https://github.com/Elleined/eureka-discovery-service)
  - Goto Google Account 
  - Search App Password
  - In Select App Choose Other(Custom name) and provide name you want
@@ -19,9 +18,9 @@ This repository contains the template for sending email with attachment, sending
   - Spring boot
   - Spring mvc
   - Java mail API
-  - Hbernate validator
+  - Hibernate validator
 
-# Usefull links
+# Useful links
  - Generate the app password: https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
 
 # Check API endpoints in Postman

@@ -11,7 +11,7 @@
 	<groupId>com.elleined</groupId>
 	<artifactId>email-sender-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>email-sender</name>
+	<name>email-sender-api</name>
 		<description>Creating API for sending email using spring boot with java mail</description>
 	<properties>
 		<java.version>17</java.version>

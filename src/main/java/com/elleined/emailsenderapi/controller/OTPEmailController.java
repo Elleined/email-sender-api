@@ -31,6 +31,7 @@ public class OTPEmailController {
 
         otpMessage.setOtp(otpGeneratorService.getOtp()); // Sets the otp because otp is already generated inside send method
         otpMessage.setExpirationTime(otpGeneratorService.getExpiration()); // Sets the otp expiration becuase the exporation is already generated inside send method
+        System.out.println("OTP " + otpMessage);
         return otpMessage;
     }
 }

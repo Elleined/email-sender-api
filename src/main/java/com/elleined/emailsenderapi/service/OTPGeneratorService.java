@@ -3,15 +3,16 @@ package com.elleined.emailsenderapi.service;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalTime;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 @Data
 @Service
 public class OTPGeneratorService {
-    private final Set<Integer> otpList = new HashSet<>();
+    private final static Set<Integer> otpList = new HashSet<>();
+    private final static SecureRandom secureRandom = new SecureRandom();
     private LocalTime expiration;
     private int otp;
 
@@ -19,8 +20,8 @@ public class OTPGeneratorService {
      * This method sets the otp
      */
     public void generateOTP() {
-        this.otp = new Random().nextInt(100_000, 999_999);
-        if (otpList.contains(this.otp)) generateOTP();
-        otpList.add(otp);
+        this.otp = secureRandom.nextInt(100_000, 999_999);
+        if (OTPGeneratorService.otpList.contains(this.otp)) generateOTP();
+        OTPGeneratorService.otpList.add(otp);
     }
 }

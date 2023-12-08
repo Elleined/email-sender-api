@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -15,23 +16,19 @@ import java.util.Objects;
 @Service
 @Slf4j
 @Qualifier("attachmentEmailService")
-public class AttachmentEmailService extends BaseEmailService implements EmailService<EmailAttachmentMessage> {
-    @Override
-    public void send(EmailAttachmentMessage emailAttachmentMessage) throws MessagingException, IOException {
+public class AttachmentEmailService extends BaseEmailService {
+
+    public void send(EmailAttachmentMessage attachmentMessage, MultipartFile attachment) throws MessagingException, IOException {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
 
         messageHelper.setFrom(sender);
-        messageHelper.setTo(emailAttachmentMessage.getReceiver());
-        messageHelper.setSubject(emailAttachmentMessage.getSubject());
-        messageHelper.setText(emailAttachmentMessage.getMessageBody());
+        messageHelper.setTo(attachmentMessage.getReceiver());
+        messageHelper.setSubject(attachmentMessage.getSubject());
+        messageHelper.setText(attachmentMessage.getMessageBody());
 
-        byte[] bytes = emailAttachmentMessage.getAbsoluteAttachmentFileName().getBytes();
-        String fileName = emailAttachmentMessage.getAbsoluteAttachmentFileName();
-
-        ByteArrayResource resource = new ByteArrayResource(bytes);
-        messageHelper.addAttachment(Objects.requireNonNull(fileName), resource);
+        messageHelper.addAttachment(Objects.requireNonNull(attachment.getOriginalFilename()), new ByteArrayResource(attachment.getBytes()));
 
         javaMailSender.send(message);
         log.debug("Email with attachment sent successfully!");

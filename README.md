@@ -26,7 +26,7 @@ This repository contains the template for sending email with attachment, sending
 # Run with Docker
 1. Docker Run Email Sender API
 ```
-docker run -itd --rm -p 8091:8091 --name esa_app esa
+docker run -itd --rm -p 8091:8091 --name esa_app -e MAIL_USERNAME=<gmail_account> -e MAIL_PASSWORD=<generated_app_password> esa
 ```
 
 # Check API endpoints in Postman

@@ -23,5 +23,11 @@ This repository contains the template for sending email with attachment, sending
 # Useful links
  - Generate the app password: https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
 
+# Run with Docker
+1. Docker Run Email Sender API
+```
+docker run -itd --rm -p 8091:8091 --name esa_app esa
+```
+
 # Check API endpoints in Postman
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/26932885-7fc11acb-7833-4ce0-a5eb-f899f0d44026?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D26932885-7fc11acb-7833-4ce0-a5eb-f899f0d44026%26entityType%3Dcollection%26workspaceId%3D638a4bab-020e-48f2-950a-f85be75bbe0c)

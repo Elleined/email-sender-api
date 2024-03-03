@@ -57,6 +57,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>email-sender-api</finalName>
 	</build>
 
 </project>

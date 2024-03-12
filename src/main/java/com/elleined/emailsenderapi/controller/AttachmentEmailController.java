@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/sendMailWithAttachment")
+@RequestMapping("/send-mail-with-attachment")
 @RequiredArgsConstructor
 public class AttachmentEmailController {
 

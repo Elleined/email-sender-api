@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sendSimpleMail")
+@RequestMapping("/send-simple-mail")
 public class SimpleEmailController {
 
     private final EmailService<EmailMessage> emailService;

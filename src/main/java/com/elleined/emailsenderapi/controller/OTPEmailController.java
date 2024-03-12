@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/sendOTPMail")
+@RequestMapping("/send-otp-mail")
 public class OTPEmailController {
     private final EmailService<OTPMessage> emailService;
     private final OTPGeneratorService otpGeneratorService;

@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 public class EmailAttachmentMessage extends EmailMessage {
 
-
     @Builder(builderMethodName = "attachmentMessageBuilder")
     public EmailAttachmentMessage(String receiver, String subject, String messageBody) {
         super(receiver, subject, messageBody);

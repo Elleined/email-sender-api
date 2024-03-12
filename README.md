@@ -29,5 +29,10 @@ API for sending email
 docker run -itd --rm -p 8091:8091 --name esa_app -e MAIL_USERNAME=<gmail_account> -e MAIL_PASSWORD=<generated_app_password> esa
 ```
 
+# Run with Docker Compose
+```
+docker compose --env-file <env_file_path> up
+```
+
 # Check API endpoints in Postman
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/26932885-7fc11acb-7833-4ce0-a5eb-f899f0d44026?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D26932885-7fc11acb-7833-4ce0-a5eb-f899f0d44026%26entityType%3Dcollection%26workspaceId%3D638a4bab-020e-48f2-950a-f85be75bbe0c)

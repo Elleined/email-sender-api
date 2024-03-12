@@ -8,8 +8,10 @@ services:
     ports:
       - "8091:8091"
     environment:
-      - MAIL_USERNAME=juandelacruz@gmail.com
-      - MAIL_PASSWORD=abcdefghijklm
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+    networks:
+      - esa_network
 networks:
   esa_network:
     name: esa_network

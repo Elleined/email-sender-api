@@ -1,0 +1,18 @@
+version: "3"
+services:
+  esa_app:
+    build: .
+    image: elleined/esa
+    container_name: esa_app
+    restart: always
+    ports:
+      - "8091:8091"
+    environment:
+      - MAIL_USERNAME=juandelacruz@gmail.com
+      - MAIL_PASSWORD=abcdefghijklm
+networks:
+  esa_network:
+    name: esa_network
+    external: false
+    ipam:
+      driver: default

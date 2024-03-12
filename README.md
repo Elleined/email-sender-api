@@ -1,5 +1,5 @@
 # email-sender
-This repository contains the template for sending email with attachment, sending simple email, and sending OTP in email with expiration
+API for sending email
 
 # How to send email
  - Goto Google Account 

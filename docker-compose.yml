@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  esa_app:
+    build: .
+    image: elleined/esa:thesis
+    container_name: esa_app
+    restart: always
+    ports:
+      - "8091:8091"
+    environment:
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+    networks:
+      - esa_network
+networks:
+  esa_network:
+    name: esa_network
+    external: false
+    ipam:
+      driver: default

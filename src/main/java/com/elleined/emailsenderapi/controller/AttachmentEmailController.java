@@ -2,13 +2,13 @@ package com.elleined.emailsenderapi.controller;
 
 import com.elleined.emailsenderapi.dto.EmailAttachmentMessage;
 import com.elleined.emailsenderapi.service.AttachmentEmailService;
-import com.elleined.emailsenderapi.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

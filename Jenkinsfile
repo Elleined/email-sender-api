@@ -30,7 +30,7 @@ pipeline {
         stage("Create Docker Image") {
             steps {
                 echo "Creating docker image. Please Wait..."
-                sh 'docker build -t esa:latest .'
+                sh 'docker build -t esa:thesis .'
                 echo "Creating docker image. Success!"
             }
         }
@@ -46,8 +46,8 @@ pipeline {
         stage("Push docker image to DockerHub") {
             steps {
                 echo "Pushing docker image to DockerHub. Please Wait..."
-                sh 'docker tag esa:latest elleined/esa:latest'
-                sh 'docker push elleined/esa:latest'
+                sh 'docker tag esa:thesis elleined/esa:thesis'
+                sh 'docker push elleined/esa:thesis'
                 echo "Pushing docker image to DockerHub. Success!"
             }
         }

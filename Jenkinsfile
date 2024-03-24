@@ -13,7 +13,7 @@ pipeline {
         stage("Clone Email Sender API from Github") {
             steps {
                 echo "Cloning Email Sender API from Github. Please Wait..."
-                git branch: 'main',
+                git branch: 'thesis-esa',
                     url: 'https://github.com/Elleined/email-sender-api'
                 echo "Cloning Email Sender API from Github. Success!"
             }

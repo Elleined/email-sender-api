@@ -9,8 +9,9 @@ API for sending email
  - Copy the 16 letter characters that is your app password
  - Go to application.properties set these following
  ```
- spring.mail.username=sample@gmail.com  
- spring.mail.password=qwerasdfzxcv
+ spring.mail.username=juandelacruz@gmail.com  
+ spring.mail.password=abcdefghijkl
+ app.name=my_app
  ```
  - Check API endpoints in Postman.
 
@@ -26,7 +27,7 @@ API for sending email
 # Run with Docker
 1. Docker Run Email Sender API
 ```
-docker run -itd --rm -p 8091:8091 --name esa_app -e MAIL_USERNAME=<gmail_account> -e MAIL_PASSWORD=<generated_app_password> esa
+docker run -itd --rm -p 8091:8091 --name esa_app --env-file ./esa.env elleined/esa
 ```
 
 # Run with Docker Compose

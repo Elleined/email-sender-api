@@ -10,6 +10,7 @@ services:
     environment:
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - APP_NAME=${MAIL_PASSWORD}
     networks:
       - esa_network
 networks:

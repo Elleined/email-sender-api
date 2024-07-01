@@ -22,9 +22,6 @@ import java.util.Objects;
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
 
-    @Value("${app.name}")
-    private String appName;
-
     @Value("${spring.mail.username}")
     private String sender;
 

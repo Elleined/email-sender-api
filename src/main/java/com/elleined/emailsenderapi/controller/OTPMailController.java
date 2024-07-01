@@ -22,9 +22,6 @@ public class OTPMailController {
     private final EmailService emailService;
     private final SecureRandom secureRandom;
 
-    @Value("${app.name}")
-    private String appName;
-
     @PostMapping("/otp-mail")
     public OTPMessageDTO send(@Valid @RequestBody OTPMessageRequest otpMessageRequest) throws MessagingException {
         LocalDateTime expiration = LocalDateTime.now().plusSeconds(otpMessageRequest.getPlusExpirationSeconds());
@@ -39,7 +36,7 @@ public class OTPMailController {
                     request this code, please ignore these message.
                     
                     %s
-                    """, appName, otp, expiration, appName);
+                    """, "Your app name", otp, expiration, "Your app name");
 
         emailService.send(otpMessageRequest, message);
 

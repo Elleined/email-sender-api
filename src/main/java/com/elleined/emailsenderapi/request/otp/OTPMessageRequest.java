@@ -7,10 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class OTPMessageRequest {
 
     @Email(message = "Please provide a proper email!")
@@ -22,11 +24,4 @@ public class OTPMessageRequest {
 
     @Positive(message = "Please provide seconds to be added in expiration time from date time now")
     private int plusExpirationSeconds;
-
-    @Builder
-    public OTPMessageRequest(String receiver, String subject, int plusExpirationSeconds) {
-        this.receiver = receiver;
-        this.subject = subject;
-        this.plusExpirationSeconds = plusExpirationSeconds;
-    }
 }

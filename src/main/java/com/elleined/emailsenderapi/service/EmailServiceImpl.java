@@ -22,7 +22,7 @@ import java.util.Objects;
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
+    @Value("${MAIL_USERNAME}")
     private String sender;
 
     @Override

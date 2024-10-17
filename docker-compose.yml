@@ -4,13 +4,13 @@ services:
     build: .
     image: elleined/esa
     container_name: esa_app
-    restart: always
     ports:
       - "8091:8091"
     environment:
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - APP_NAME=${MAIL_PASSWORD}
+      - PORT=${PORT}
     networks:
       - esa_network
 networks:

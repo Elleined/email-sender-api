@@ -4,26 +4,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class OTPMessageDTO {
     private String receiver;
-
     private String subject;
-
     private int otp;
-
     private LocalDateTime expiration;
-
-    @Builder
-    public OTPMessageDTO(String receiver, String subject, int otp, LocalDateTime expiration) {
-        this.receiver = receiver;
-        this.subject = subject;
-        this.otp = otp;
-        this.expiration = expiration;
-    }
 }

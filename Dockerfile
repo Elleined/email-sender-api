@@ -1,8 +1,10 @@
-FROM openjdk:17-alpine
-MAINTAINER Elleined
+FROM jelastic/maven:3.9.5-openjdk-21 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean install -DskipTests
 
-ENV PORT=8091
-
-ADD ./target/*.jar email-sender-api.jar
-EXPOSE 8091
+FROM alpine/java:21-jdk
+WORKDIR /app
+COPY --from=build /app/target/*.jar .
 CMD ["java", "-jar", "email-sender-api.jar"]

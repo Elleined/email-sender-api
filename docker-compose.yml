@@ -1,18 +1,15 @@
 version: "3.8"
 services:
-  esa_app:
-    build: .
-    image: elleined/esa
-    container_name: esa_app
+  email_sender_api:
+    image: elleined/email-sender-api:latest
+    container_name: email_sender_api
+    env_file:
+      - .env
     ports:
       - "8091:8091"
-    environment:
-      - MAIL_USERNAME=${MAIL_USERNAME}
-      - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - APP_NAME=${MAIL_PASSWORD}
-      - PORT=${PORT}
     networks:
       - esa_network
+
 networks:
   esa_network:
     name: esa_network

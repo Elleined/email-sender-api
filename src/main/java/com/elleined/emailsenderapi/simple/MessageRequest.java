@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.request;
+package com.elleined.emailsenderapi.simple;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

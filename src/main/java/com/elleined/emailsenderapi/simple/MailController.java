@@ -1,6 +1,5 @@
-package com.elleined.emailsenderapi.controller;
+package com.elleined.emailsenderapi.simple;
 
-import com.elleined.emailsenderapi.request.MessageRequest;
 import com.elleined.emailsenderapi.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class OTPMailController {
+public class OTPContoller {
     private final EmailService emailService;
     private final SecureRandom secureRandom;
 

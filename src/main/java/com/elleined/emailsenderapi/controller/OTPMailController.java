@@ -27,7 +27,7 @@ public class OTPMailController {
 
     @PostMapping("/otp-mail")
     public OTPMessageDTO send(@Valid @RequestBody OTPMessageRequest otpMessageRequest) throws MessagingException {
-        LocalDateTime expiration = LocalDateTime.now().plusSeconds(otpMessageRequest.getPlusExpirationSeconds());
+        LocalDateTime expiration = LocalDateTime.now().plusSeconds(otpMessageRequest.plusExpirationSeconds());
         int otp = secureRandom.nextInt(100_000, 999_999);
         String message = String.format("""
                     To verify your account, please enter the following
@@ -43,11 +43,6 @@ public class OTPMailController {
 
         emailService.send(otpMessageRequest, message);
 
-        return OTPMessageDTO.builder()
-                .receiver(otpMessageRequest.getReceiver())
-                .subject(otpMessageRequest.getSubject())
-                .expiration(expiration)
-                .otp(otp)
-                .build();
+        return new OTPMessageDTO(otpMessageRequest.receiver(), otpMessageRequest.subject(), otp, expiration);
     }
 }

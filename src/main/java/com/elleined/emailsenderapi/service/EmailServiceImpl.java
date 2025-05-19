@@ -32,9 +32,9 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 
         messageHelper.setFrom(sender);
-        messageHelper.setTo(messageRequest.getReceiver());
-        messageHelper.setSubject(messageRequest.getSubject());
-        messageHelper.setText(messageRequest.getMessageBody());
+        messageHelper.setTo(messageRequest.receiver());
+        messageHelper.setSubject(messageRequest.subject());
+        messageHelper.setText(messageRequest.messageBody());
 
         javaMailSender.send(mimeMessage);
         log.debug("Sending simple mail success!");
@@ -47,8 +47,8 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 
         messageHelper.setFrom(sender);
-        messageHelper.setTo(otpMessageRequest.getReceiver());
-        messageHelper.setSubject(otpMessageRequest.getSubject());
+        messageHelper.setTo(otpMessageRequest.receiver());
+        messageHelper.setSubject(otpMessageRequest.subject());
         messageHelper.setText(message);
 
         javaMailSender.send(mimeMessage);
@@ -62,9 +62,9 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 
         messageHelper.setFrom(sender);
-        messageHelper.setTo(messageRequest.getReceiver());
-        messageHelper.setSubject(messageRequest.getSubject());
-        messageHelper.setText(messageRequest.getMessageBody());
+        messageHelper.setTo(messageRequest.receiver());
+        messageHelper.setSubject(messageRequest.subject());
+        messageHelper.setText(messageRequest.messageBody());
 
         messageHelper.addAttachment(Objects.requireNonNull(attachment.getOriginalFilename()), new ByteArrayResource(attachment.getBytes()));
 

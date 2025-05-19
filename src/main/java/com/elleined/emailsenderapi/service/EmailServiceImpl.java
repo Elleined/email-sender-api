@@ -1,7 +1,6 @@
 package com.elleined.emailsenderapi.service;
 
 import com.elleined.emailsenderapi.simple.MessageRequest;
-import com.elleined.emailsenderapi.otp.OTPMessageRequest;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -38,21 +37,6 @@ public class EmailServiceImpl implements EmailService {
 
         javaMailSender.send(mimeMessage);
         log.debug("Sending simple mail success!");
-    }
-
-    @Override
-    public void send(OTPMessageRequest otpMessageRequest, String message) throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-
-        messageHelper.setFrom(sender);
-        messageHelper.setTo(otpMessageRequest.receiver());
-        messageHelper.setSubject(otpMessageRequest.subject());
-        messageHelper.setText(message);
-
-        javaMailSender.send(mimeMessage);
-        log.debug("Sending otp mail success!");
     }
 
     @Override

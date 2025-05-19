@@ -1,7 +1,7 @@
 package com.elleined.emailsenderapi.service;
 
 import com.elleined.emailsenderapi.request.MessageRequest;
-import com.elleined.emailsenderapi.request.otp.OTPMessageRequest;
+import com.elleined.emailsenderapi.otp.OTPMessageRequest;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

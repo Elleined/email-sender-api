@@ -1,7 +1,5 @@
-package com.elleined.emailsenderapi.controller;
+package com.elleined.emailsenderapi.otp;
 
-import com.elleined.emailsenderapi.dto.OTPMessageDTO;
-import com.elleined.emailsenderapi.request.otp.OTPMessageRequest;
 import com.elleined.emailsenderapi.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;

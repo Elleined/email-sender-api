@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.controller;
+package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class ExceptionController {
 
     @ExceptionHandler(MessagingException.class)
     public ResponseEntity<String> handleMessagingException(MessagingException ex) {
-        return new ResponseEntity<>( "Cannot send email! Probably theres something wrong with the mail service! " + ex.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>( "Cannot send email! Probably theres something wrong with the mail service! " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(IOException.class)

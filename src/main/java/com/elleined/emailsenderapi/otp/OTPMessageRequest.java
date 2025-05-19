@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.request.otp;
+package com.elleined.emailsenderapi.otp;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

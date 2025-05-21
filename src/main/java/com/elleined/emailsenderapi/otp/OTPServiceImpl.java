@@ -1,15 +1,13 @@
 package com.elleined.emailsenderapi.otp;
 
+import com.elleined.emailsenderapi.mail.MailService;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,11 +21,8 @@ import java.util.Locale;
 @Validated
 @RequiredArgsConstructor
 public class OTPServiceImpl implements OTPService {
-    private final JavaMailSender mailSender;
+    private final MailService mailService;
     private final SecureRandom secureRandom;
-
-    @Value("${MAIL_USERNAME}")
-    private String sender;
 
     @Value("${APP_NAME}")
     private String appName;
@@ -53,15 +48,7 @@ public class OTPServiceImpl implements OTPService {
                     request this code, please ignore these message.
                     """, appName, otp, formattedExpiration);
 
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-
-        messageHelper.setFrom(sender);
-        messageHelper.setTo(receiver);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(message);
-
-        mailSender.send(mimeMessage);
+        mailService.send(receiver, subject, message);
         log.debug("Sending otp mail success!");
 
         return new OTPMessage(receiver, subject, otp, expiration);

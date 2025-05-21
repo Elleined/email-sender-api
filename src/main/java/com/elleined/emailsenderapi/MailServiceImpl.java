@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,7 @@ public class MailServiceImpl implements MailService {
     // https://mailtrap.io/blog/java-email-validation/
     private static final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
+    @Async
     @Override
     public void send(@NotBlank @Email String receiver,
                      @NotBlank String subject,
@@ -54,6 +56,7 @@ public class MailServiceImpl implements MailService {
         mailSender.send(mimeMessage);
     }
 
+    @Async
     @Override
     public void send(@Email @NotBlank String receiver,
                      @NotBlank String subject,

@@ -3,10 +3,6 @@ package com.elleined.emailsenderapi;
 import jakarta.mail.MessagingException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 public interface MailService {
     void send(@Email @NotBlank String receiver,
@@ -16,5 +12,6 @@ public interface MailService {
     void send(@Email @NotBlank String receiver,
               @NotBlank String subject,
               @NotBlank String message,
-              @NotNull MultipartFile attachment) throws MessagingException, IOException;
+              @NotBlank String attachment,
+              byte[] bytes) throws MessagingException;
 }

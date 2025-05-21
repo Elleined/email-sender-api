@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.mail;
+package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -30,15 +30,16 @@ public class MailServiceImpl implements MailService {
     @Value("${MAIL_USERNAME}")
     private String sender;
 
-    private final static String EMAIL_REGEX = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+    // https://mailtrap.io/blog/java-email-validation/
+    private static final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     @Override
     public void send(@NotBlank @Email String receiver,
                      @NotBlank String subject,
                      @NotBlank String message) throws MessagingException {
 
-        if (!Pattern.compile(EMAIL_REGEX)
-                .matcher(message)
+        if (!Pattern.compile(regex)
+                .matcher(receiver)
                 .matches())
             throw new MessagingException("Invalid email address");
 
@@ -59,8 +60,8 @@ public class MailServiceImpl implements MailService {
                      @NotBlank String message,
                      @NotNull MultipartFile attachment) throws MessagingException, IOException {
 
-        if (!Pattern.compile(EMAIL_REGEX)
-                .matcher(message)
+        if (!Pattern.compile(receiver)
+                .matcher(receiver)
                 .matches())
             throw new MessagingException("Invalid email address");
 

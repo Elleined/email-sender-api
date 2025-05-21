@@ -1,36 +1,32 @@
-package com.elleined.emailsenderapi.otp;
+package com.elleined.emailsenderapi;
 
-import com.elleined.emailsenderapi.mail.MailService;
 import jakarta.mail.MessagingException;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-@Slf4j
-@Service
-@Validated
+@RestController
 @RequiredArgsConstructor
-public class OTPServiceImpl implements OTPService {
+@RequestMapping("/otp")
+public class OTPController {
     private final MailService mailService;
     private final SecureRandom secureRandom;
 
     @Value("${APP_NAME}")
     private String appName;
 
-    @Override
-    public OTPMessage send(@Email @NotBlank String receiver,
-                           @NotBlank String subject,
-                           @Positive int plusExpirationSeconds) throws MessagingException {
+    @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public OTPMessage send(@RequestParam("receiver") String receiver,
+                           @RequestParam("subject") String subject,
+                           @RequestParam(value = "plusExpirationSeconds", defaultValue = "60") int plusExpirationSeconds) throws MessagingException {
 
         LocalDateTime expiration = LocalDateTime.now().plusSeconds(plusExpirationSeconds);
         String formattedExpiration = DateTimeFormatter
@@ -49,8 +45,6 @@ public class OTPServiceImpl implements OTPService {
                     """, appName, otp, formattedExpiration);
 
         mailService.send(receiver, subject, message);
-        log.debug("Sending otp mail success!");
-
         return new OTPMessage(receiver, subject, otp, expiration);
     }
 }

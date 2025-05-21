@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.mail;
+package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.constraints.Email;

@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.otp;
+package com.elleined.emailsenderapi;
 
 import java.time.LocalDateTime;
 

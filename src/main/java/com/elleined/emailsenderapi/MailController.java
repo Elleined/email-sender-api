@@ -1,4 +1,4 @@
-package com.elleined.emailsenderapi.attachment;
+package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -9,18 +9,27 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@RequestMapping
 @RequiredArgsConstructor
-@RequestMapping("/attachment")
-public class AttachmentMailController {
-    private final AttachmentMailService attachmentMailService;
+public class MailController {
+    private final MailService mailService;
 
-    @PostMapping
+    @PostMapping("/attachment")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void send(@RequestPart("receiver") String receiver,
                      @RequestPart("subject") String subject,
                      @RequestPart("message") String message,
                      @RequestPart("attachment") MultipartFile attachment) throws MessagingException, IOException {
 
-        attachmentMailService.send(receiver, subject, message, attachment);
+        mailService.send(receiver, subject, message, attachment);
+    }
+
+    @PostMapping("/simple")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void send(@RequestParam("receiver") String receiver,
+                     @RequestParam("subject") String subject,
+                     @RequestParam("message") String message) throws MessagingException {
+
+        mailService.send(receiver, subject, message);
     }
 }

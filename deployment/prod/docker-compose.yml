@@ -1,0 +1,22 @@
+services:
+  email-sender-api:
+    image: elleined/email-sender-api:${IMAGE_TAG}
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - APP_NAME=${APP_NAME}
+      - PORT=${PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://${CONTAINER_NAME}:${PORT}/api/${API_VERSION}/esa/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

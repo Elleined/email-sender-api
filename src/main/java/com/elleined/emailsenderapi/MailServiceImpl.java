@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 
@@ -57,8 +61,7 @@ public class MailServiceImpl implements MailService {
     public void send(@Email @NotBlank String receiver,
                      @NotBlank String subject,
                      @NotBlank String message,
-                     @NotBlank String attachment,
-                     byte[] bytes) throws MessagingException {
+                     @NotNull MultipartFile attachment) throws MessagingException, IOException {
 
         if (!Pattern.compile(receiver)
                 .matcher(receiver)
@@ -72,7 +75,7 @@ public class MailServiceImpl implements MailService {
         messageHelper.setTo(receiver);
         messageHelper.setSubject(subject);
         messageHelper.setText(message);
-        messageHelper.addAttachment(attachment, new ByteArrayResource(bytes));
+        messageHelper.addAttachment(Objects.requireNonNull(attachment.getOriginalFilename()), new ByteArrayResource(attachment.getBytes()));
 
         mailSender.send(mimeMessage);
     }

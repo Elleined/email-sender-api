@@ -1,5 +1,6 @@
 package com.elleined.emailsenderapi;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,12 @@ public class MailController {
 
     @PostMapping("/attachment")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void send(@RequestPart("receiver") String receiver,
-                     @RequestPart("subject") String subject,
-                     @RequestPart("message") String message,
+    public void send(@RequestParam("receiver") String receiver,
+                     @RequestParam("subject") String subject,
+                     @RequestParam("message") String message,
                      @RequestPart("attachment") MultipartFile attachment) throws MessagingException, IOException {
 
-        mailService.send(receiver, subject, message, attachment.getOriginalFilename(), attachment.getBytes());
+        mailService.send(receiver, subject, message, attachment);
     }
 
     @PostMapping("/simple")

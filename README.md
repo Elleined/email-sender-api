@@ -1,38 +1,26 @@
 # email-sender
 API for sending email
 
-# How to send email
- - Goto Google Account 
- - Search App Password
- - In Select App Choose Other(Custom name) and provide name you want
- - Click generate 
- - Copy the 16 letter characters that is your app password
- - Go to application.properties set these following
- ```
- spring.mail.username=juandelacruz@gmail.com  
- spring.mail.password=abcdefghijkl
- app.name=my_app
- ```
- - Check API endpoints in Postman.
+# Generate App Password 
+[Generate app password tutorial](https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/)
+1. Goto Google Account 
+2. Search App Password
+3. In Select App Choose Other(Custom name) and provide name you want
+4. Click create 
+5. Copy the 16 letter characters that is your app password
 
-# Technologies used
-  - Spring boot
-  - Spring mvc
-  - Java mail API
-  - Hibernate validator
+# How to run
+## dev
+1. Supply the proper environment variables in deployment/dev/.env
+2. Add that .env to IDE environment variables (Prefer using IntelliJ)
+3. Run the local project for development
 
-# Useful links
- - Generate the app password: https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
-
-# Run with Docker
-1. Docker Run Email Sender API
+## prod
+1. Supply the proper environment variables in deployment/prod/.env
+2. CD to deployment/prod
+3. Run the production project
 ```
-docker run -itd --rm -p 8091:8091 --name esa_app --env-file ./esa.env elleined/esa
-```
-
-# Run with Docker Compose
-```
-docker compose --env-file <env_file_path> up
+docker compose up -d
 ```
 
 # Check API endpoints in Postman

@@ -7,6 +7,7 @@ services:
       - '${PORT}:${PORT}'
     environment:
       - APP_NAME=${APP_NAME}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
       - PORT=${PORT}
       - LOG_LEVEL=${LOG_LEVEL}
       - MAIL_USERNAME=${MAIL_USERNAME}

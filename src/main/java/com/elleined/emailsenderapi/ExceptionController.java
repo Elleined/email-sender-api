@@ -28,8 +28,7 @@ public class ExceptionController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<String>> handleConstraintViolationException(ConstraintViolationException ex) {
-        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-        List<String> errors = violations.stream()
+        List<String> errors = ex.getConstraintViolations().stream()
                 .map(violation -> String.format("%s: %s", violation.getPropertyPath().toString(), violation.getMessage()))
                 .toList();
 

@@ -18,11 +18,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -70,46 +72,74 @@ class MailServiceImplTest {
         // Assertions
     }
 
-    static Stream<Arguments> simpleMailInvalidInputs() {
+    static Stream<Arguments> simpleMailNullInputs() {
         return Stream.of(
-                // Null inputs
                 Arguments.of(null, "subject", "message"),
                 Arguments.of("receiver@gmail.com", null, "message"),
-                Arguments.of("receiver@gmail.com", "subject", null),
-
-                // Blank inputs
-                Arguments.of( "   ", "subject", "message"),
-                Arguments.of("receiver@gmail.com", "   ", "message"),
-                Arguments.of("receiver@gmail.com", "subject", "  ")
+                Arguments.of("receiver@gmail.com", "subject", null)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("simpleMailInvalidInputs")
-    void simpleMail_ShouldThrowBindException_ForInvalidInputs(String email, String subject, String message) throws NoSuchMethodException {
+    @MethodSource("simpleMailNullInputs")
+    void simpleMail_ShouldThrowConstraintViolation_ForNullInputs(String receiver, String subject, String message) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
-        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
-                mailService,
-                MailServiceImpl.class.getMethod("send", String.class, String.class, String.class),
-                new Object[]{email, subject, message}
-        );
-        System.out.println(violations.size());
 
         // Set up method
 
         // Stubbing methods
 
         // Calling the method
+        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
+                mailService,
+                MailService.class.getMethod("send", String.class, String.class, String.class),
+                new Object[]{receiver, subject, message}
+        );
 
         // Behavior Verifications
+        verifyNoInteractions(mailSender);
 
         // Assertions
+        assertEquals(1, violations.size());
     }
 
+    static Stream<Arguments> simpleMailBlankInputs() {
+        return Stream.of(
+                Arguments.of("   ", "message"),
+                Arguments.of("subject", "  ")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("simpleMailBlankInputs")
+    void simpleMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
+        // Pre defined values
+
+        // Expected Value
+
+        // Mock data
+
+        // Set up method
+
+        // Stubbing methods
+
+        // Calling the method
+        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
+                mailService,
+                MailService.class.getMethod("send", String.class, String.class, String.class),
+                new Object[]{"receiver@gmail.com", subject, message}
+        );
+
+        // Behavior Verifications
+        verifyNoInteractions(mailSender);
+
+        // Assertions
+        assertEquals(1, violations.size());
+    }
 
     @Test
     void attachmentMail_HappyPath() {
@@ -127,12 +157,76 @@ class MailServiceImplTest {
         doNothing().when(mailSender).send(any(MimeMessage.class));
 
         // Calling the method
-        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", new MockMultipartFile("attachment", new byte[]{})));
+        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", MockFile.get()));
 
         // Behavior Verifications
         verify(mailSender).createMimeMessage();
         verify(mailSender).send(any(MimeMessage.class));
 
         // Assertions
+    }
+
+
+    static Stream<Arguments> attachmentMailNullInputs() {
+        MockMultipartFile attachment = MockFile.get();
+        return Stream.of(
+                Arguments.of(null, "subject", "message", attachment),
+                Arguments.of("receiver@gmail.com", null, "message", attachment),
+                Arguments.of("receiver@gmail.com", "subject", "message", null)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("attachmentMailNullInputs")
+    void attachmentMail_ShouldThrowConstraintViolation_ForNullInputs(String email, String subject, String message, MockMultipartFile attachment) throws NoSuchMethodException {
+        // Pre defined values
+
+        // Expected Value
+
+        // Mock data
+
+        // Set up method
+
+        // Stubbing methods
+
+        // Calling the method
+        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
+                mailService,
+                MailService.class.getMethod("send", String.class, String.class, String.class, MultipartFile.class),
+                new Object[]{email, subject, message, attachment}
+        );
+
+        // Behavior Verifications
+        verifyNoInteractions(mailSender);
+
+        // Assertions
+        assertEquals(1, violations.size());
+    }
+
+    @ParameterizedTest
+    @MethodSource("simpleMailBlankInputs")
+    void attachmentMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
+        // Pre defined values
+
+        // Expected Value
+
+        // Mock data
+
+        // Set up method
+
+        // Stubbing methods
+
+        // Calling the method
+        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
+                mailService,
+                MailService.class.getMethod("send", String.class, String.class, String.class, MultipartFile.class),
+                new Object[]{"receiver@gmail.com", subject, message, MockFile.get()}
+        );
+
+        // Behavior Verifications
+        verifyNoInteractions(mailSender);
+
+        // Assertions
+        assertEquals(1, violations.size());
     }
 }

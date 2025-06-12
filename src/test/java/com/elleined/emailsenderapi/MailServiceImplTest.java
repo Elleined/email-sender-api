@@ -2,10 +2,8 @@ package com.elleined.emailsenderapi;
 
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.provider.Arguments;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,9 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,13 +26,6 @@ class MailServiceImplTest {
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(mailService, "sender", "test@gmail.com");
-    }
-
-    static Stream<Arguments> provideSendInvalidInputs() {
-        return Stream.of(
-                Arguments.of("red@gmail.com", "   ", "   "),
-                Arguments.of("red@gmail.com", "  ", "  ")
-        );
     }
 
     @Test

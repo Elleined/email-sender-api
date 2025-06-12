@@ -11,10 +11,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Objects;
 
 
 @Slf4j
@@ -50,7 +46,8 @@ public class MailServiceImpl implements MailService {
     public void send(String receiver,
                      String subject,
                      String message,
-                     MultipartFile attachment) throws MessagingException, IOException {
+                     String fileName,
+                     byte[] bytes) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
@@ -59,7 +56,7 @@ public class MailServiceImpl implements MailService {
         messageHelper.setTo(receiver);
         messageHelper.setSubject(subject);
         messageHelper.setText(message);
-        messageHelper.addAttachment(Objects.requireNonNull(attachment.getOriginalFilename()), new ByteArrayResource(attachment.getBytes()));
+        messageHelper.addAttachment(fileName, new ByteArrayResource(bytes));
 
         mailSender.send(mimeMessage);
     }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -128,7 +127,7 @@ class MailControllerTest {
         // Set up method
 
         // Stubbing methods
-        doNothing().when(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
+        doNothing().when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Calling the method
         assertDoesNotThrow(() -> {
@@ -141,7 +140,7 @@ class MailControllerTest {
         }, "endpoint changed or doesn't exists anymore");
 
         // Behavior Verifications
-        verify(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
+        verify(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Assertions
     }
@@ -207,7 +206,7 @@ class MailControllerTest {
         // Mock data
 
         // Set up method
-        doThrow(MessagingException.class).when(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
+        doThrow(MessagingException.class).when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Stubbing methods
 
@@ -220,34 +219,7 @@ class MailControllerTest {
                 .andExpect(status().isInternalServerError());
 
         // Behavior Verifications
-        verify(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
-
-        // Assertions
-    }
-
-    @Test
-    void attachmentMail_ShouldReturnInternalServerError_ForIOException() throws Exception {
-        // Pre defined values
-
-        // Expected Value
-
-        // Mock data
-
-        // Set up method
-        doThrow(IOException.class).when(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
-
-        // Stubbing methods
-
-        // Calling the method
-        mockMvc.perform(multipart("/attachment")
-                        .file(MockFile.get())
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
-                        .param("message", "message"))
-                .andExpect(status().isNotAcceptable());
-
-        // Behavior Verifications
-        verify(mailService).send(anyString(), anyString(), anyString(), any(MultipartFile.class));
+        verify(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Assertions
     }

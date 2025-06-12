@@ -21,7 +21,7 @@ public class MailController {
                      @RequestParam("message") String message,
                      @RequestPart("attachment") MultipartFile attachment) throws MessagingException, IOException {
 
-        mailService.send(receiver, subject, message, attachment);
+        mailService.send(receiver, subject, message, attachment.getOriginalFilename(), attachment.getBytes());
     }
 
     @PostMapping("/simple")

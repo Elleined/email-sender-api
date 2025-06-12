@@ -18,8 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -150,14 +150,16 @@ class MailServiceImplTest {
         // Mock data
 
         // Set up method
+        MockMultipartFile attachment = MockFile.get();
         MimeMessage mimeMessage = mock(MimeMessage.class);
 
         // Stubbing methods
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
+
         doNothing().when(mailSender).send(any(MimeMessage.class));
 
         // Calling the method
-        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", MockFile.get()));
+        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", attachment.getOriginalFilename(), attachment.getBytes()));
 
         // Behavior Verifications
         verify(mailSender).createMimeMessage();
@@ -167,18 +169,18 @@ class MailServiceImplTest {
     }
 
 
-    static Stream<Arguments> attachmentMailNullInputs() {
+    static Stream<Arguments> attachmentMailNullInputs() throws IOException {
         MockMultipartFile attachment = MockFile.get();
         return Stream.of(
-                Arguments.of(null, "subject", "message", attachment),
-                Arguments.of("receiver@gmail.com", null, "message", attachment),
-                Arguments.of("receiver@gmail.com", "subject", "message", null)
+                Arguments.of(null, "subject", "message", attachment.getOriginalFilename(), attachment.getBytes()),
+                Arguments.of("receiver@gmail.com", null, "message", attachment.getOriginalFilename(), attachment.getBytes()),
+                Arguments.of("receiver@gmail.com", "subject", "message", null, null)
         );
     }
 
     @ParameterizedTest
     @MethodSource("attachmentMailNullInputs")
-    void attachmentMail_ShouldThrowConstraintViolation_ForNullInputs(String email, String subject, String message, MockMultipartFile attachment) throws NoSuchMethodException {
+    void attachmentMail_ShouldThrowConstraintViolation_ForNullInputs(String email, String subject, String message, String fileName, byte[] bytes) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
@@ -192,8 +194,8 @@ class MailServiceImplTest {
         // Calling the method
         Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
                 mailService,
-                MailService.class.getMethod("send", String.class, String.class, String.class, MultipartFile.class),
-                new Object[]{email, subject, message, attachment}
+                MailService.class.getMethod("send", String.class, String.class, String.class, String.class, byte[].class),
+                new Object[]{email, subject, message, fileName, bytes}
         );
 
         // Behavior Verifications
@@ -205,12 +207,13 @@ class MailServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("simpleMailBlankInputs")
-    void attachmentMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
+    void attachmentMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException, IOException {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
+        MockMultipartFile attachment = MockFile.get();
 
         // Set up method
 
@@ -219,8 +222,8 @@ class MailServiceImplTest {
         // Calling the method
         Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
                 mailService,
-                MailService.class.getMethod("send", String.class, String.class, String.class, MultipartFile.class),
-                new Object[]{"receiver@gmail.com", subject, message, MockFile.get()}
+                MailService.class.getMethod("send", String.class, String.class, String.class, String.class, byte[].class),
+                new Object[]{"receiver@gmail.com", subject, message, attachment.getOriginalFilename(), attachment.getBytes()}
         );
 
         // Behavior Verifications

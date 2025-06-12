@@ -1,34 +1,28 @@
 package com.elleined.emailsenderapi;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(OTPController.class)
 class OTPControllerTest {
@@ -118,7 +112,32 @@ class OTPControllerTest {
     }
 
     @Test
-    void OTPMail_ShouldUse60SecondsDefaultPlusExpirationSeconds_WhenNotProvided() throws Exception {
+    void OTPMail_ShouldReturnBadRequest_ForLessThanZeroPlusExpirationSeconds() throws Exception{
+        // Pre defined values
+
+        // Expected Value
+
+        // Mock data
+
+        // Set up method
+
+        // Stubbing methods
+
+        // Calling the method
+        mockMvc.perform(post("/otp")
+                        .param("receiver", "receiver")
+                        .param("subject", "subject")
+                        .param("plusExpirationSeconds", String.valueOf(-1)))
+                .andExpect(status().isBadRequest());
+
+        // Behavior Verifications
+        verifyNoInteractions(mailService, secureRandom);
+
+        // Assertions
+    }
+
+    @Test
+    void OTPMail_ShouldUse60Seconds_DefaultPlusExpirationSeconds_WhenNotProvided() throws Exception {
         // Pre defined values
 
         // Expected Value
@@ -150,7 +169,7 @@ class OTPControllerTest {
     }
 
     @Test
-    void OTPMail_ShouldThrowMessageException() throws Exception {
+    void OTPMail_ShouldReturnInternalServerError_ForMessagingException() throws Exception{
         // Pre defined values
 
         // Expected Value

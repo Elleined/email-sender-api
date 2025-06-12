@@ -1,6 +1,7 @@
 package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class OTPController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public OTPMessage send(@RequestParam("receiver") String receiver,
                            @RequestParam("subject") String subject,
-                           @RequestParam(value = "plusExpirationSeconds", defaultValue = "60") int plusExpirationSeconds) throws MessagingException {
+                           @Positive @RequestParam(value = "plusExpirationSeconds", defaultValue = "60") int plusExpirationSeconds) throws MessagingException {
 
         LocalDateTime expiration = LocalDateTime.now().plusSeconds(plusExpirationSeconds);
         String formattedExpiration = DateTimeFormatter

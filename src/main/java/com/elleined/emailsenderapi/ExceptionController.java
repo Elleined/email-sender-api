@@ -1,6 +1,8 @@
 package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -18,6 +21,16 @@ public class ExceptionController {
     public ResponseEntity<List<String>> handleBindException(BindException ex) {
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(ObjectError::getDefaultMessage)
+                .toList();
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List<String>> handleConstraintViolationException(ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+        List<String> errors = violations.stream()
+                .map(violation -> String.format("%s: %s", violation.getPropertyPath().toString(), violation.getMessage()))
                 .toList();
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);

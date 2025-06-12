@@ -2,9 +2,6 @@ package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -32,18 +28,11 @@ public class MailServiceImpl implements MailService {
     private String sender;
 
     // https://mailtrap.io/blog/java-email-validation/
-    private static final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-
     @Async
     @Override
-    public void send(@NotBlank @Email String receiver,
-                     @NotBlank String subject,
-                     @NotBlank String message) throws MessagingException {
-
-        if (!Pattern.compile(regex)
-                .matcher(receiver)
-                .matches())
-            throw new MessagingException("Invalid email address");
+    public void send(String receiver,
+                     String subject,
+                     String message) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
@@ -58,15 +47,10 @@ public class MailServiceImpl implements MailService {
 
     @Async
     @Override
-    public void send(@Email @NotBlank String receiver,
-                     @NotBlank String subject,
-                     @NotBlank String message,
-                     @NotNull MultipartFile attachment) throws MessagingException, IOException {
-
-        if (!Pattern.compile(receiver)
-                .matcher(receiver)
-                .matches())
-            throw new MessagingException("Invalid email address");
+    public void send(String receiver,
+                     String subject,
+                     String message,
+                     MultipartFile attachment) throws MessagingException, IOException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);

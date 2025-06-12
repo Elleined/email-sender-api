@@ -1,6 +1,5 @@
 package com.elleined.emailsenderapi;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

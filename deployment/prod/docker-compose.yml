@@ -6,6 +6,7 @@ services:
     ports:
       - '${PORT}:${PORT}'
     environment:
+      - TZ=Asia/Manila
       - APP_NAME=${APP_NAME}
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
       - PORT=${PORT}

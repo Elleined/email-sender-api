@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -76,17 +75,27 @@ class MailServiceImplTest {
         // Assertions
     }
 
-    private static Stream<Arguments> simpleMailNullInputs() {
+    private static Stream<Arguments> nullAndBlankValues() {
+        String receiver = "receiver@gmail.com";
+        String subject = "subject";
+        String message = "message";
+
         return Stream.of(
-                Arguments.of(null, "subject", "message"),
-                Arguments.of("receiver@gmail.com", null, "message"),
-                Arguments.of("receiver@gmail.com", "subject", null)
+                Arguments.of(null, subject, message),
+                Arguments.of(receiver, null, message),
+                Arguments.of(receiver, subject, null),
+
+                Arguments.of("   ", subject, message),
+                Arguments.of(receiver, "   ", message),
+
+                Arguments.of("", subject, message),
+                Arguments.of(receiver, "", message)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("simpleMailNullInputs")
-    void simpleMail_ShouldThrowConstraintViolationException_ForNullInputs(String receiver, String subject, String message) throws NoSuchMethodException {
+    @MethodSource("nullAndBlankValues")
+    void simpleMail_ShouldThrowConstraintViolationException_ForNullAndBlankInputs(String receiver, String subject, String message) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
@@ -108,41 +117,7 @@ class MailServiceImplTest {
         verifyNoInteractions(mailSender);
 
         // Assertions
-        assertEquals(1, violations.size());
-    }
-
-    private static Stream<Arguments> simpleMailBlankInputs() {
-        return Stream.of(
-                Arguments.of("   ", "message"),
-                Arguments.of("subject", "  ")
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("simpleMailBlankInputs")
-    void simpleMail_ShouldThrowConstraintViolationException_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
-        // Pre defined values
-
-        // Expected Value
-
-        // Mock data
-
-        // Set up method
-
-        // Stubbing methods
-
-        // Calling the method
-        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
-                mailService,
-                MailService.class.getMethod("send", String.class, String.class, String.class),
-                new Object[]{"receiver@gmail.com", subject, message}
-        );
-
-        // Behavior Verifications
-        verifyNoInteractions(mailSender);
-
-        // Assertions
-        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
     }
 
     @Test
@@ -172,17 +147,33 @@ class MailServiceImplTest {
         // Assertions
     }
 
-    private static Stream<Arguments> attachmentMailNullInputs() throws IOException {
+    private static Stream<Arguments> attachmentMail_NullAndBlankInputs() throws IOException {
+        String receiver = "receiver@gmail.com";
+        String subject = "subject";
+        String message = "message";
         MockMultipartFile attachment = MockFile.get();
+        String fileName = attachment.getOriginalFilename();
+        byte[] bytes = attachment.getBytes();
+
         return Stream.of(
-                Arguments.of(null, "subject", "message", attachment.getOriginalFilename(), attachment.getBytes()),
-                Arguments.of("receiver@gmail.com", null, "message", attachment.getOriginalFilename(), attachment.getBytes()),
-                Arguments.of("receiver@gmail.com", "subject", "message", null, null)
+                Arguments.of(null, subject, message, fileName, bytes),
+                Arguments.of(receiver, null, message, fileName, bytes),
+                Arguments.of(receiver, subject, null, fileName, bytes),
+
+                Arguments.of("   ", subject, message, fileName, bytes),
+                Arguments.of(receiver, "   ", message, fileName, bytes),
+                Arguments.of(receiver, subject, "   ", fileName, bytes),
+                Arguments.of(receiver, subject, message, "    ", bytes),
+
+                Arguments.of("", subject, message, fileName, bytes),
+                Arguments.of(receiver, "", message, fileName, bytes),
+                Arguments.of(receiver, subject, "", fileName, bytes),
+                Arguments.of(receiver, subject, message, "", bytes)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("attachmentMailNullInputs")
+    @MethodSource("attachmentMail_NullAndBlankInputs")
     void attachmentMail_ShouldThrowConstraintViolationException_ForNullInputs(String email, String subject, String message, String fileName, byte[] bytes) throws NoSuchMethodException {
         // Pre defined values
 
@@ -205,34 +196,6 @@ class MailServiceImplTest {
         verifyNoInteractions(mailSender);
 
         // Assertions
-        assertEquals(1, violations.size());
-    }
-
-    @ParameterizedTest
-    @MethodSource("simpleMailBlankInputs")
-    void attachmentMail_ShouldThrowConstraintViolationException_ForBlankInputs(String subject, String message) throws NoSuchMethodException, IOException {
-        // Pre defined values
-
-        // Expected Value
-
-        // Mock data
-        MockMultipartFile attachment = MockFile.get();
-
-        // Set up method
-
-        // Stubbing methods
-
-        // Calling the method
-        Set<ConstraintViolation<MailService>> violations = executableValidator.validateParameters(
-                mailService,
-                MailService.class.getMethod("send", String.class, String.class, String.class, String.class, byte[].class),
-                new Object[]{"receiver@gmail.com", subject, message, attachment.getOriginalFilename(), attachment.getBytes()}
-        );
-
-        // Behavior Verifications
-        verifyNoInteractions(mailSender);
-
-        // Assertions
-        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
     }
 }

@@ -77,17 +77,27 @@ class OTPControllerTest {
         // Assertions
     }
 
-    private static Stream<Arguments> otpMailNullInputs() {
+    private static Stream<Arguments> nullAndBlankValues() {
+        String receiver = "receiver@gmail.com";
+        String subject = "subject";
+        int plusExpirationSeconds = 120;
+
         return Stream.of(
-                Arguments.of(null, "subject", 120),
-                Arguments.of("receiver@gmail.com", null, 120),
-                Arguments.of("receiver@gmail.com", "subject", null)
+                Arguments.of(null, subject, plusExpirationSeconds),
+                Arguments.of(receiver, null, plusExpirationSeconds),
+                Arguments.of(receiver, subject, null),
+
+                Arguments.of("   ", subject, plusExpirationSeconds),
+                Arguments.of(receiver, "   ", plusExpirationSeconds),
+
+                Arguments.of("", receiver, plusExpirationSeconds),
+                Arguments.of(receiver, "", plusExpirationSeconds)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("otpMailNullInputs")
-    void OTPMail_ShouldReturnBadRequest_ForNullInputs(String receiver, String subject, Integer plusExpirationSeconds) throws Exception {
+    @MethodSource("nullAndBlankValues")
+    void OTPMail_ShouldReturnBadRequest_ForNullAndBlankInputs(String receiver, String subject, Integer plusExpirationSeconds) throws Exception {
         // Pre defined values
 
         // Expected Value

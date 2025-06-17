@@ -55,17 +55,9 @@ class MailControllerTest {
         // Assertions
     }
 
-    private static Stream<Arguments> simpleMailNullInputs() {
-        return Stream.of(
-                Arguments.of(null, "subject", "message"),
-                Arguments.of("receiver@gmail.com", null, "message"),
-                Arguments.of("receiver@gmail.com", "subject", null)
-        );
-    }
-
     @ParameterizedTest
-    @MethodSource("simpleMailNullInputs")
-    void simpleMail_ShouldReturnBadRequest_ForNullInputs(String receiver, String subject, String message) throws Exception {
+    @MethodSource("nullAndBlankValues")
+    void simpleMail_ShouldReturnBadRequest_ForNullAndBlankInputs(String receiver, String subject, String message) throws Exception {
         // Pre defined values
 
         // Expected Value
@@ -145,8 +137,8 @@ class MailControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("simpleMailNullInputs")
-    void attachmentMail_ShouldReturnBadRequest_ForNullInputs(String receiver, String subject, String message) throws Exception {
+    @MethodSource("nullAndBlankValues")
+    void attachmentMail_ShouldReturnBadRequest_ForNullAndBlankInputs(String receiver, String subject, String message) throws Exception {
         // Pre defined values
 
         // Expected Value
@@ -221,5 +213,23 @@ class MailControllerTest {
         verify(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Assertions
+    }
+
+    private static Stream<Arguments> nullAndBlankValues() {
+        String receiver = "receiver@gmail.com";
+        String subject = "subject";
+        String message = "message";
+
+        return Stream.of(
+                Arguments.of(null, subject, message),
+                Arguments.of(receiver, null, message),
+                Arguments.of(receiver, subject, null),
+
+                Arguments.of("   ", subject, message),
+                Arguments.of(receiver, "   ", message),
+
+                Arguments.of("", subject, message),
+                Arguments.of(receiver, "", message)
+        );
     }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.executable.ExecutableValidator;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class MailServiceImplTest {
 
-    private ExecutableValidator executableValidator;
+    private static ExecutableValidator executableValidator;
 
     @Mock
     private JavaMailSender mailSender;
@@ -38,12 +39,15 @@ class MailServiceImplTest {
     @InjectMocks
     private MailServiceImpl mailService;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setupAll() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        this.executableValidator = validator.forExecutables();
+        executableValidator = validator.forExecutables();
+    }
 
+    @BeforeEach
+    void setUp() {
         ReflectionTestUtils.setField(mailService, "sender", "test@gmail.com");
     }
 

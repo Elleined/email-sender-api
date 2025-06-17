@@ -77,7 +77,7 @@ class OTPControllerTest {
         // Assertions
     }
 
-    static Stream<Arguments> otpMailNullInputs() {
+    private static Stream<Arguments> otpMailNullInputs() {
         return Stream.of(
                 Arguments.of(null, "subject", 120),
                 Arguments.of("receiver@gmail.com", null, 120),

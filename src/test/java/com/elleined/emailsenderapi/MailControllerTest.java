@@ -55,7 +55,7 @@ class MailControllerTest {
         // Assertions
     }
 
-    static Stream<Arguments> simpleMailNullInputs() {
+    private static Stream<Arguments> simpleMailNullInputs() {
         return Stream.of(
                 Arguments.of(null, "subject", "message"),
                 Arguments.of("receiver@gmail.com", null, "message"),

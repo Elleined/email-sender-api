@@ -76,7 +76,7 @@ class MailServiceImplTest {
         // Assertions
     }
 
-    static Stream<Arguments> simpleMailNullInputs() {
+    private static Stream<Arguments> simpleMailNullInputs() {
         return Stream.of(
                 Arguments.of(null, "subject", "message"),
                 Arguments.of("receiver@gmail.com", null, "message"),
@@ -111,7 +111,7 @@ class MailServiceImplTest {
         assertEquals(1, violations.size());
     }
 
-    static Stream<Arguments> simpleMailBlankInputs() {
+    private static Stream<Arguments> simpleMailBlankInputs() {
         return Stream.of(
                 Arguments.of("   ", "message"),
                 Arguments.of("subject", "  ")
@@ -172,8 +172,7 @@ class MailServiceImplTest {
         // Assertions
     }
 
-
-    static Stream<Arguments> attachmentMailNullInputs() throws IOException {
+    private static Stream<Arguments> attachmentMailNullInputs() throws IOException {
         MockMultipartFile attachment = MockFile.get();
         return Stream.of(
                 Arguments.of(null, "subject", "message", attachment.getOriginalFilename(), attachment.getBytes()),

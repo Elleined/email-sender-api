@@ -86,7 +86,7 @@ class MailServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("simpleMailNullInputs")
-    void simpleMail_ShouldThrowConstraintViolation_ForNullInputs(String receiver, String subject, String message) throws NoSuchMethodException {
+    void simpleMail_ShouldThrowConstraintViolationException_ForNullInputs(String receiver, String subject, String message) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
@@ -120,7 +120,7 @@ class MailServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("simpleMailBlankInputs")
-    void simpleMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
+    void simpleMail_ShouldThrowConstraintViolationException_ForBlankInputs(String subject, String message) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
@@ -184,7 +184,7 @@ class MailServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("attachmentMailNullInputs")
-    void attachmentMail_ShouldThrowConstraintViolation_ForNullInputs(String email, String subject, String message, String fileName, byte[] bytes) throws NoSuchMethodException {
+    void attachmentMail_ShouldThrowConstraintViolationException_ForNullInputs(String email, String subject, String message, String fileName, byte[] bytes) throws NoSuchMethodException {
         // Pre defined values
 
         // Expected Value
@@ -211,7 +211,7 @@ class MailServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("simpleMailBlankInputs")
-    void attachmentMail_ShouldThrowConstraintViolation_ForBlankInputs(String subject, String message) throws NoSuchMethodException, IOException {
+    void attachmentMail_ShouldThrowConstraintViolationException_ForBlankInputs(String subject, String message) throws NoSuchMethodException, IOException {
         // Pre defined values
 
         // Expected Value

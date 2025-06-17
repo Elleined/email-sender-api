@@ -1,7 +1,6 @@
 package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 @ControllerAdvice
 public class ExceptionController {

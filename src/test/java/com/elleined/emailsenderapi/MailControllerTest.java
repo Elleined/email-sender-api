@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -117,7 +116,7 @@ class MailControllerTest {
     }
 
     @Test
-    void attachmentMail_HappyPath() throws MessagingException, IOException {
+    void attachmentMail_HappyPath() throws MessagingException {
         // Pre defined values
 
         // Expected Value

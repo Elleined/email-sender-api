@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -108,14 +110,16 @@ class MailControllerTest {
     }
 
     @Test
-    void attachmentMail_HappyPath() throws MessagingException {
+    void attachmentMail_HappyPath() throws MessagingException, IOException {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
+        MultipartFile file = mock(MultipartFile.class);
 
         // Set up method
+        when(file.getBytes()).thenReturn(new byte[0]);
 
         // Stubbing methods
         doNothing().when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
@@ -123,7 +127,7 @@ class MailControllerTest {
         // Calling the method
         assertDoesNotThrow(() -> {
             mockMvc.perform(multipart("/attachment")
-                            .file(MockFile.get())
+                            .file("attachment", file.getBytes())
                             .param("receiver", "receiver")
                             .param("subject", "subject")
                             .param("message", "message"))
@@ -144,14 +148,15 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
+        MultipartFile file = mock(MultipartFile.class);
 
         // Set up method
-
+        when(file.getBytes()).thenReturn(new byte[0]);
         // Stubbing methods
 
         // Calling the method
         mockMvc.perform(multipart("/attachment")
-                        .file(MockFile.get())
+                        .file("attachment", file.getBytes())
                         .param("receiver", receiver)
                         .param("subject", subject)
                         .param("message", message))
@@ -195,15 +200,17 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
+        MultipartFile file = mock(MultipartFile.class);
 
         // Set up method
+        when(file.getBytes()).thenReturn(new byte[0]);
         doThrow(MessagingException.class).when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Stubbing methods
 
         // Calling the method
         mockMvc.perform(multipart("/attachment")
-                        .file(MockFile.get())
+                        .file("attachment", file.getBytes())
                         .param("receiver", "receiver")
                         .param("subject", "subject")
                         .param("message", "message"))

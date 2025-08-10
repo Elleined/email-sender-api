@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Set;
@@ -121,15 +122,17 @@ class MailServiceImplTest {
     }
 
     @Test
-    void attachmentMail_HappyPath() {
+    void attachmentMail_HappyPath() throws IOException {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
+        MultipartFile file = mock(MultipartFile.class);
 
         // Set up method
-        MockMultipartFile attachment = MockFile.get();
+        when(file.getBytes()).thenReturn(new byte[0]);
+        when(file.getOriginalFilename()).thenReturn("originalFileName");
         MimeMessage mimeMessage = mock(MimeMessage.class);
 
         // Stubbing methods
@@ -138,7 +141,7 @@ class MailServiceImplTest {
         doNothing().when(mailSender).send(any(MimeMessage.class));
 
         // Calling the method
-        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", attachment.getOriginalFilename(), attachment.getBytes()));
+        assertDoesNotThrow(() -> mailService.send("test@gmail.com", "subject", "message", file.getOriginalFilename(), file.getBytes()));
 
         // Behavior Verifications
         verify(mailSender).createMimeMessage();
@@ -151,7 +154,7 @@ class MailServiceImplTest {
         String receiver = "receiver@gmail.com";
         String subject = "subject";
         String message = "message";
-        MockMultipartFile attachment = MockFile.get();
+        MockMultipartFile attachment = new MockMultipartFile("fileName", new byte[0]);
         String fileName = attachment.getOriginalFilename();
         byte[] bytes = attachment.getBytes();
 

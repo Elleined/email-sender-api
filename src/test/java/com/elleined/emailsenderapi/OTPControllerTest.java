@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -175,7 +176,7 @@ class OTPControllerTest {
         verify(mailService).send(anyString(), anyString(), anyString());
 
         // Assertions
-        assertTrue(difference >= 59 && difference <= 61);
+        assertThat(difference).isBetween(59L, 61L);
     }
 
     @Test

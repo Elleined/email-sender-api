@@ -25,7 +25,8 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -118,7 +119,7 @@ class MailServiceImplTest {
         verifyNoInteractions(mailSender);
 
         // Assertions
-        assertFalse(violations.isEmpty());
+        assertThat(violations).isNotEmpty();
     }
 
     @Test
@@ -199,6 +200,6 @@ class MailServiceImplTest {
         verifyNoInteractions(mailSender);
 
         // Assertions
-        assertFalse(violations.isEmpty());
+        assertThat(violations).isNotEmpty();
     }
 }

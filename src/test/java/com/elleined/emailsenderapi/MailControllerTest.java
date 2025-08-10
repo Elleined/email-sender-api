@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -36,6 +34,9 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
+        String message = "message";
 
         // Set up method
 
@@ -45,9 +46,9 @@ class MailControllerTest {
         // Calling the method
         assertDoesNotThrow(() -> {
             mockMvc.perform(post("/simple")
-                    .param("receiver", "receiver")
-                    .param("subject", "subject")
-                    .param("message", "message"))
+                            .param("receiver", receiver)
+                            .param("subject", subject)
+                            .param("message", message))
                     .andExpect(status().isAccepted());
         }, "endpoint changed or doesn't exists anymore");
 
@@ -90,6 +91,9 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
+        String message = "message";
 
         // Set up method
         doThrow(MessagingException.class).when(mailService).send(anyString(), anyString(), anyString());
@@ -98,9 +102,9 @@ class MailControllerTest {
 
         // Calling the method
         mockMvc.perform(post("/simple")
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
-                        .param("message", "message"))
+                        .param("receiver", receiver)
+                        .param("subject", subject)
+                        .param("message", message))
                 .andExpect(status().isInternalServerError());
 
         // Behavior Verifications
@@ -110,16 +114,18 @@ class MailControllerTest {
     }
 
     @Test
-    void attachmentMail_HappyPath() throws MessagingException, IOException {
+    void attachmentMail_HappyPath() throws MessagingException {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
-        MultipartFile file = mock(MultipartFile.class);
+        String receiver = "test@gmail.com";
+        String subject = "subject";
+        String message = "message";
+        byte[] bytes = new byte[0];
 
         // Set up method
-        when(file.getBytes()).thenReturn(new byte[0]);
 
         // Stubbing methods
         doNothing().when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
@@ -127,10 +133,10 @@ class MailControllerTest {
         // Calling the method
         assertDoesNotThrow(() -> {
             mockMvc.perform(multipart("/attachment")
-                            .file("attachment", file.getBytes())
-                            .param("receiver", "receiver")
-                            .param("subject", "subject")
-                            .param("message", "message"))
+                            .file("attachment", bytes)
+                            .param("receiver", receiver)
+                            .param("subject", subject)
+                            .param("message", message))
                     .andExpect(status().isAccepted());
         }, "endpoint changed or doesn't exists anymore");
 
@@ -148,15 +154,15 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
-        MultipartFile file = mock(MultipartFile.class);
+        byte[] bytes = new byte[0];
 
         // Set up method
-        when(file.getBytes()).thenReturn(new byte[0]);
+
         // Stubbing methods
 
         // Calling the method
         mockMvc.perform(multipart("/attachment")
-                        .file("attachment", file.getBytes())
+                        .file("attachment", bytes)
                         .param("receiver", receiver)
                         .param("subject", subject)
                         .param("message", message))
@@ -175,6 +181,9 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
+        String message = "message";
 
         // Set up method
 
@@ -182,9 +191,9 @@ class MailControllerTest {
 
         // Calling the method
         mockMvc.perform(multipart("/attachment")
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
-                        .param("message", "message"))
+                        .param("receiver", receiver)
+                        .param("subject", subject)
+                        .param("message", message))
                 .andExpect(status().isBadRequest());
 
         // Behavior Verifications
@@ -200,20 +209,23 @@ class MailControllerTest {
         // Expected Value
 
         // Mock data
-        MultipartFile file = mock(MultipartFile.class);
+        String receiver = "test@gmail.com";
+        String subject = "subject";
+        String message = "message";
+        byte[] bytes = new byte[0];
 
         // Set up method
-        when(file.getBytes()).thenReturn(new byte[0]);
+
         doThrow(MessagingException.class).when(mailService).send(anyString(), anyString(), anyString(), anyString(), any());
 
         // Stubbing methods
 
         // Calling the method
         mockMvc.perform(multipart("/attachment")
-                        .file("attachment", file.getBytes())
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
-                        .param("message", "message"))
+                        .file("attachment", bytes)
+                        .param("receiver", receiver)
+                        .param("subject", subject)
+                        .param("message", message))
                 .andExpect(status().isInternalServerError());
 
         // Behavior Verifications

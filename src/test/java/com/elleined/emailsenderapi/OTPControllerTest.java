@@ -18,8 +18,9 @@ import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,14 +44,14 @@ class OTPControllerTest {
     @Test
     void OTPMail_HappyPath() throws MessagingException {
         // Pre defined values
-        String receiver = "receiver";
-        String subject = "subject";
-        int otp = 1;
-        int plusExpirationSeconds = 60;
 
         // Expected Value
 
         // Mock data
+        String receiver = "receiver";
+        String subject = "subject";
+        int otp = 1;
+        int plusExpirationSeconds = 60;
 
         // Set up method
 
@@ -65,10 +66,10 @@ class OTPControllerTest {
                             .param("subject", subject)
                             .param("plusExpirationSeconds", String.valueOf(plusExpirationSeconds)))
                     .andExpect(status().isAccepted())
-                    .andExpect(jsonPath("$.receiver").value(receiver))
-                    .andExpect(jsonPath("$.subject").value(subject))
-                    .andExpect(jsonPath("$.otp").value(otp))
-                    .andExpect(jsonPath("$.expiration").exists());
+                    .andExpect(jsonPath("$.receiver", is(receiver)))
+                    .andExpect(jsonPath("$.subject", is(subject)))
+                    .andExpect(jsonPath("$.otp", notNullValue()))
+                    .andExpect(jsonPath("$.expiration", notNullValue()));
         }, "endpoint changed or doesn't exists anymore");
 
         // Behavior Verifications
@@ -123,12 +124,14 @@ class OTPControllerTest {
     }
 
     @Test
-    void OTPMail_ShouldReturnBadRequest_ForLessThanZeroPlusExpirationSeconds() throws Exception{
+    void OTPMail_ShouldReturnBadRequest_ForLessThanZeroPlusExpirationSeconds() throws Exception {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
 
         // Set up method
 
@@ -136,8 +139,8 @@ class OTPControllerTest {
 
         // Calling the method
         mockMvc.perform(post("/otp")
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
+                        .param("receiver", receiver)
+                        .param("subject", subject)
                         .param("plusExpirationSeconds", String.valueOf(-1)))
                 .andExpect(status().isBadRequest());
 
@@ -154,6 +157,8 @@ class OTPControllerTest {
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
 
         // Set up method
 
@@ -162,11 +167,16 @@ class OTPControllerTest {
         when(secureRandom.nextInt(anyInt(), anyInt())).thenReturn(1);
 
         // Calling the method
-        MvcResult mvcResult = mockMvc.perform(post("/otp")
-                        .param("receiver", "receiver")
-                        .param("subject", "subject"))
+        MvcResult mvcResult = assertDoesNotThrow(() -> mockMvc.perform(post("/otp")
+                        .param("receiver", receiver)
+                        .param("subject", subject))
                 .andExpect(status().isAccepted())
-                .andReturn();
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.receiver", is(receiver)))
+                .andExpect(jsonPath("$.subject", is(subject)))
+                .andExpect(jsonPath("$.otp", notNullValue()))
+                .andExpect(jsonPath("$.expiration", notNullValue()))
+                .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
         long difference = Duration.between(LocalDateTime.now(), otpMessage.expiration()).getSeconds();
@@ -180,12 +190,14 @@ class OTPControllerTest {
     }
 
     @Test
-    void OTPMail_ShouldReturnInternalServerError_ForMessagingException() throws Exception{
+    void OTPMail_ShouldReturnInternalServerError_ForMessagingException() throws Exception {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
+        String receiver = "test@gmail.com";
+        String subject = "subject";
 
         // Set up method
 
@@ -195,8 +207,8 @@ class OTPControllerTest {
 
         // Calling the method
         mockMvc.perform(post("/otp")
-                        .param("receiver", "receiver")
-                        .param("subject", "subject")
+                        .param("receiver", receiver)
+                        .param("subject", subject)
                         .param("plusExpirationSeconds", String.valueOf(120)))
                 .andExpect(status().isInternalServerError());
 

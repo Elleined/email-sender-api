@@ -1,10 +1,10 @@
 package com.elleined.emailsenderapi;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record OTPMessage(
         String receiver,
         String subject,
         int otp,
-        LocalDateTime expiration
+        Instant expiration
 ) { }

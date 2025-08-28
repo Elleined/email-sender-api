@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.security.SecureRandom;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -179,7 +179,7 @@ class OTPControllerTest {
                 .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
-        long difference = Duration.between(LocalDateTime.now(), otpMessage.expiration()).getSeconds();
+        long difference = Duration.between(Instant.now(), otpMessage.expiration()).getSeconds();
 
         // Behavior Verifications
         verify(secureRandom).nextInt(anyInt(), anyInt());

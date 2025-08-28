@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -59,7 +59,7 @@ class OTPControllerIntegrationTest {
                 .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
-        long difference = Duration.between(LocalDateTime.now(), otpMessage.expiration()).getSeconds();
+        long difference = Duration.between(Instant.now(), otpMessage.expiration()).getSeconds();
         boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
 
         assertThat(mailReceived).isTrue();
@@ -83,7 +83,7 @@ class OTPControllerIntegrationTest {
                 .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
-        long difference = Duration.between(LocalDateTime.now(), otpMessage.expiration()).getSeconds();
+        long difference = Duration.between(Instant.now(), otpMessage.expiration()).getSeconds();
         boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
 
         assertThat(mailReceived).isTrue();

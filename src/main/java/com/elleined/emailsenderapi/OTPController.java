@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -34,6 +35,7 @@ public class OTPController {
         Instant expiration = Instant.now().plusSeconds(plusExpirationSeconds);
         String formattedExpiration = DateTimeFormatter
                 .ofPattern("MMMM d yyyy 'at' h:mm:ss a", Locale.ENGLISH)
+                .withZone(ZoneId.systemDefault())
                 .format(expiration);
 
         int otp = secureRandom.nextInt(100_000, 999_999);

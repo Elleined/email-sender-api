@@ -56,7 +56,6 @@ class OTPControllerIntegrationTest {
                 .andExpect(jsonPath("$.subject", is(subject)))
                 .andExpect(jsonPath("$.otp", notNullValue()))
                 .andExpect(jsonPath("$.expiration", notNullValue()))
-                .andDo(print())
                 .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);

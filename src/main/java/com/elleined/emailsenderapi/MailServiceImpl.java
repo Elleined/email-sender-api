@@ -2,7 +2,6 @@ package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,12 +15,14 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 @Service
 @Validated
-@RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
+    private final String sender;
 
-    @Value("${MAIL_USERNAME}")
-    private String sender;
+    public MailServiceImpl(JavaMailSender mailSender, @Value("${spring.mail.username}") String sender) {
+        this.mailSender = mailSender;
+        this.sender = sender;
+    }
 
     // https://mailtrap.io/blog/java-email-validation/
     @Async

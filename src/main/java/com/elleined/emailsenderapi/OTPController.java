@@ -3,7 +3,6 @@ package com.elleined.emailsenderapi;
 import jakarta.mail.MessagingException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +13,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/otp")
 public class OTPController {
     private final MailService mailService;
     private final SecureRandom secureRandom;
+    private final String appName;
 
-    @Value("${APP_NAME}")
-    private String appName;
+    public OTPController(MailService mailService, SecureRandom secureRandom, @Value("${app-name}") String appName) {
+        this.mailService = mailService;
+        this.secureRandom = secureRandom;
+        this.appName = appName;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)

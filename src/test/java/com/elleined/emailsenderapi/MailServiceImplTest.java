@@ -123,17 +123,15 @@ class MailServiceImplTest {
     }
 
     @Test
-    void attachmentMail_HappyPath() throws IOException {
+    void attachmentMail_HappyPath() {
         // Pre defined values
 
         // Expected Value
 
         // Mock data
-        MultipartFile file = mock(MultipartFile.class);
+        MultipartFile file = new MockMultipartFile("attachment", new byte[0]);
 
         // Set up method
-        when(file.getBytes()).thenReturn(new byte[0]);
-        when(file.getOriginalFilename()).thenReturn("originalFileName");
         MimeMessage mimeMessage = mock(MimeMessage.class);
 
         // Stubbing methods

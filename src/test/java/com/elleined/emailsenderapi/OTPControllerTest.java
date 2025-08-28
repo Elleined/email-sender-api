@@ -179,7 +179,7 @@ class OTPControllerTest {
                 .andReturn());
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
-        long difference = Duration.between(Instant.now(), otpMessage.expiration()).getSeconds();
+        long difference = Duration.between(Instant.now(), otpMessage.expiration()).toSeconds();
 
         // Behavior Verifications
         verify(secureRandom).nextInt(anyInt(), anyInt());

@@ -31,7 +31,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: elleined/file-server-api
+          image: elleined/email-sender-api
           tags: latest, v2.0.0
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}

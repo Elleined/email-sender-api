@@ -1,10 +1,12 @@
 package com.elleined.emailsenderapi;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 
 public record OTPMessage(
-        String receiver,
-        String subject,
-        int otp,
-        Instant expiration
+        @JsonProperty("receiver") String receiver,
+        @JsonProperty("sunject") String subject,
+        @JsonProperty("otp") int otp,
+        @JsonProperty("expiration") Instant expiration
 ) { }

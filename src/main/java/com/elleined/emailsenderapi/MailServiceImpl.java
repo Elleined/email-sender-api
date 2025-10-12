@@ -2,7 +2,6 @@ package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 
-@Slf4j
 @Service
 @Validated
 public class MailServiceImpl implements MailService {
@@ -24,7 +22,6 @@ public class MailServiceImpl implements MailService {
         this.sender = sender;
     }
 
-    // https://mailtrap.io/blog/java-email-validation/
     @Async
     @Override
     public void send(String receiver,

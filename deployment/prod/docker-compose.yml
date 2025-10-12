@@ -9,6 +9,7 @@ services:
       - TZ=Asia/Manila
       - APP_NAME=${APP_NAME}
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - MAX_FILE_SIZE_IN_MB=${MAX_FILE_SIZE_IN_MB}
       - PORT=${PORT}
       - LOG_LEVEL=${LOG_LEVEL}
       - MAIL_USERNAME=${MAIL_USERNAME}

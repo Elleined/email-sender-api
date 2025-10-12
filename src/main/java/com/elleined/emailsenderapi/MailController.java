@@ -1,8 +1,6 @@
 package com.elleined.emailsenderapi;
 
 import jakarta.mail.MessagingException;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,19 +18,19 @@ public class MailController {
 
     @PostMapping("/attachment")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void send(@NotBlank @RequestParam("receiver") String receiver,
-                     @NotBlank @RequestParam("subject") String subject,
-                     @NotBlank @RequestParam("message") String message,
-                     @NotNull @RequestPart("attachment") MultipartFile attachment) throws MessagingException, IOException {
+    public void send(@RequestParam("receiver") String receiver,
+                     @RequestParam("subject") String subject,
+                     @RequestParam("message") String message,
+                     @RequestPart("attachment") MultipartFile attachment) throws MessagingException, IOException {
 
         mailService.send(receiver, subject, message, attachment.getOriginalFilename(), attachment.getBytes());
     }
 
     @PostMapping("/simple")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void send(@NotBlank @RequestParam("receiver") String receiver,
-                     @NotBlank @RequestParam("subject") String subject,
-                     @NotBlank @RequestParam("message") String message) throws MessagingException {
+    public void send(@RequestParam("receiver") String receiver,
+                     @RequestParam("subject") String subject,
+                     @RequestParam("message") String message) throws MessagingException {
 
         mailService.send(receiver, subject, message);
     }

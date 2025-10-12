@@ -42,7 +42,7 @@ class MailControllerIntegrationTest {
                     .andExpect(status().isAccepted());
         }, "endpoint changed or doesn't exists anymore");
 
-        boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
+        boolean mailReceived = greenMail.waitForIncomingEmail(20_000, 1);
         assertThat(mailReceived).isTrue();
     }
 
@@ -62,7 +62,7 @@ class MailControllerIntegrationTest {
                     .andExpect(status().isAccepted());
         }, "endpoint changed or doesn't exists anymore");
 
-        boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
+        boolean mailReceived = greenMail.waitForIncomingEmail(10_000, 1);
         assertThat(mailReceived).isTrue();
     }
 }

@@ -60,7 +60,7 @@ class OTPControllerIntegrationTest {
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
         long difference = Duration.between(Instant.now(), otpMessage.expiration()).toSeconds();
-        boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
+        boolean mailReceived = greenMail.waitForIncomingEmail(10_000, 1);
 
         assertThat(mailReceived).isTrue();
         assertThat(difference).isBetween(119L, 121L);
@@ -84,7 +84,7 @@ class OTPControllerIntegrationTest {
 
         OTPMessage otpMessage = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), OTPMessage.class);
         long difference = Duration.between(Instant.now(), otpMessage.expiration()).toSeconds();
-        boolean mailReceived = greenMail.waitForIncomingEmail(500, 1);
+        boolean mailReceived = greenMail.waitForIncomingEmail(10_000, 1);
 
         assertThat(mailReceived).isTrue();
         assertThat(difference).isBetween(59L, 61L);

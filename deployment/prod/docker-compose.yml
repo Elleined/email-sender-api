@@ -14,6 +14,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - SPRING_OPENAPI_ENABLED=${SPRING_OPENAPI_ENABLED}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
